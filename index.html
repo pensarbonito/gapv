@@ -18,7 +18,7 @@
 
     /* SIDEBAR ULTRA MINIMAL */
     aside {
-      width: 200px;
+      width: 210px;
       background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
       padding: 32px 16px;
@@ -32,12 +32,12 @@
     aside .nav-title:first-child { margin-top: 0; }
     
     .nav-link {
-      padding: 5px 8px;
+      padding: 6px 8px;
       border-radius: 4px;
       font-size: 13px;
       color: var(--text-muted);
       cursor: pointer;
-      transition: color 0.1s ease;
+      transition: all 0.1s ease;
       margin-bottom: 2px;
     }
 
@@ -50,7 +50,7 @@
       font-size: 13px;
       cursor: pointer;
       text-align: left;
-      padding: 5px 8px;
+      padding: 6px 8px;
       display: block;
       width: 100%;
       border-radius: 4px;
@@ -60,7 +60,7 @@
 
     .btn-sidebar:hover { color: var(--text-main); background: #f0f0f0; }
 
-    /* CONTENIDO PRINCIPAL CON SCROLL INDEPENDIENTE */
+    /* CONTENIDO PRINCIPAL */
     main { flex: 1; padding: 40px 48px; overflow-y: auto; max-width: 1100px; }
 
     /* METRICAS */
@@ -128,13 +128,8 @@
       padding: 0 8px;
     }
 
-    /* CONTENEDOR TABLA */
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    /* TABLA LIMPIA */
+    /* TABLA */
+    .table-container { width: 100%; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
 
     th {
@@ -176,68 +171,95 @@
 
     .btn-icon:hover { color: var(--text-main); }
 
-    /* REGALAS PARA DISPOSITIVOS MÓVILES (MÁXIMO 768px DE ANCHO) */
+    /* VISTA DE TARJETAS PEQUEÑAS (COMPACTAS) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .project-card-small {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: border-color 0.15s ease;
+    }
+
+    .project-card-small:hover {
+      border-color: #bbb;
+    }
+
+    .card-line { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--text-main); }
+
+    /* MODAL LECTURA LARGA */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 36px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      border: none; background: none;
+      font-size: 18px; cursor: pointer; color: var(--text-muted);
+    }
+
+    .modal-line { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .modal-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+    .modal-body { font-size: 14px; line-height: 1.7; color: #333; }
+    .modal-body p { margin-bottom: 16px; }
+
+    /* MÓVIL */
     @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-        height: auto;
-        overflow-y: auto;
-      }
-
-      aside {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 16px;
-      }
-
-      .nav-title { margin-top: 8px; }
-
-      main {
-        padding: 20px 16px;
-        width: 100%;
-      }
-
-      .metrics-row {
-        gap: 16px;
-        justify-content: space-between;
-      }
-
-      .form-inline {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .form-inline input, .form-inline select {
-        width: 100%;
-        border-bottom: 1px solid var(--border);
-        padding: 6px 0;
-      }
-
-      .custom-inputs {
-        flex-direction: column;
-      }
-
-      .btn-add {
-        background: var(--text-main);
-        color: #fff;
-        border-radius: 4px;
-        padding: 8px;
-        margin-top: 4px;
-      }
+      body { flex-direction: column; height: auto; overflow-y: auto; }
+      aside { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+      main { padding: 20px 16px; width: 100%; }
+      .metrics-row { gap: 16px; justify-content: space-between; }
+      .form-inline { flex-direction: column; gap: 8px; }
+      .form-inline input, .form-inline select { width: 100%; border-bottom: 1px solid var(--border); padding: 6px 0; }
+      .custom-inputs { flex-direction: column; }
+      .btn-add { background: var(--text-main); color: #fff; border-radius: 4px; padding: 8px; margin-top: 4px; }
     }
   </style>
 </head>
 <body>
 
   <aside>
-    <div class="nav-title">Filtros</div>
-    <div class="nav-link active" onclick="setFilter('status', 'all')">Todas</div>
-    <div class="nav-link" onclick="setFilter('status', 'pending')">Pendientes</div>
-    <div class="nav-link" onclick="setFilter('status', 'completed')">Completadas</div>
+    <div class="nav-title">Vistas</div>
+    <div class="nav-link active" id="view-tasks-btn" onclick="switchMainView('tasks')">Tareas</div>
+    <div class="nav-link" id="view-cards-btn" onclick="switchMainView('cards')">Proyectos</div>
 
-    <div class="nav-title">Categorías</div>
-    <div id="category-filters"></div>
+    <div id="sidebar-filters-section">
+      <div class="nav-title">Filtros Tareas</div>
+      <div class="nav-link" onclick="setFilter('status', 'all')">Todas</div>
+      <div class="nav-link" onclick="setFilter('status', 'pending')">Pendientes</div>
+      <div class="nav-link" onclick="setFilter('status', 'completed')">Completadas</div>
+
+      <div class="nav-title">Líneas / Áreas</div>
+      <div id="category-filters"></div>
+    </div>
 
     <div class="nav-title">CSV</div>
     <button class="btn-sidebar" onclick="downloadCSVReport()">↓ Exportar</button>
@@ -246,79 +268,137 @@
   </aside>
 
   <main>
-    <div class="metrics-row">
-      <div class="metric-item"><span class="metric-num" id="stat-total">0</span><span class="metric-label">totales</span></div>
-      <div class="metric-item"><span class="metric-num" id="stat-pending">0</span><span class="metric-label">pendientes</span></div>
-      <div class="metric-item"><span class="metric-num" id="stat-completed">0</span><span class="metric-label">completadas</span></div>
+    <!-- VISTA PRINCIPAL: TABLA DE TAREAS -->
+    <div id="tasks-view">
+      <div class="metrics-row">
+        <div class="metric-item"><span class="metric-num" id="stat-total">0</span><span class="metric-label">totales</span></div>
+        <div class="metric-item"><span class="metric-num" id="stat-pending">0</span><span class="metric-label">pendientes</span></div>
+        <div class="metric-item"><span class="metric-num" id="stat-completed">0</span><span class="metric-label">completadas</span></div>
+      </div>
+
+      <div class="form-container">
+        <form id="task-form">
+          <div class="form-inline">
+            <input type="text" id="title" placeholder="Nueva tarea..." required autocomplete="off">
+            
+            <select id="line-select" required>
+              <option value="" disabled selected>Línea / Área...</option>
+            </select>
+
+            <select id="project-select" required disabled>
+              <option value="" disabled selected>Proyecto...</option>
+            </select>
+
+            <select id="person-select" required>
+              <option value="" disabled selected>Responsable...</option>
+              <option value="Todo el equipo">Todo el equipo</option>
+              <option value="Carlos">Carlos</option>
+              <option value="Jair">Jair</option>
+              <option value="Jheovany">Jheovany</option>
+              <option value="Luisa">Luisa</option>
+              <option value="Maria Paula">Maria Paula</option>
+              <option value="Mariana">Mariana</option>
+              <option value="Mariela">Mariela</option>
+              <option value="Sebastian">Sebastian</option>
+              <option value="OTHER_PERSON">Otro...</option>
+            </select>
+            <button type="submit" class="btn-add">+</button>
+          </div>
+          
+          <div class="custom-inputs">
+            <input type="text" id="custom-project" placeholder="Nombre del proyecto..." style="display: none;">
+            <input type="text" id="custom-person" placeholder="Nombre del responsable..." style="display: none;">
+          </div>
+        </form>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Tarea</th>
+              <th style="width: 22%;">Proyecto / Línea</th>
+              <th style="width: 20%;">Asignado a</th>
+              <th style="width: 13%;">Fecha</th>
+              <th style="width: 10%;">Estado</th>
+              <th style="width: 5%; text-align: right;"></th>
+            </tr>
+          </thead>
+          <tbody id="tasks-table-body"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="form-container">
-      <form id="task-form">
-        <div class="form-inline">
-          <input type="text" id="title" placeholder="Nueva tarea..." required autocomplete="off">
-          <select id="project-select" required>
-            <option value="" disabled selected>Proyecto...</option>
-            <option value="OTHER_PROJECT">Otro...</option>
-          </select>
-          <select id="person-select" required>
-            <option value="" disabled selected>Responsable...</option>
-            <option value="Todo el equipo">Todo el equipo</option>
-            <option value="Carlos Gonzalez">Carlos Gonzalez</option>
-            <option value="Jair Torres">Jair Torres</option>
-            <option value="Jheovany Jacanamejoy">Jheovany Jacanamejoy</option>
-            <option value="Luisa Villegas">Luisa Villegas</option>
-            <option value="Maria Paula Maldonado">Maria Paula Maldonado</option>
-            <option value="Mariana Álvarez">Mariana Álvarez</option>
-            <option value="Mariela Silva">Mariela Silva</option>
-            <option value="Sebastian Cruz">Sebastian Cruz</option>
-            <option value="OTHER_PERSON">Otro...</option>
-          </select>
-          <button type="submit" class="btn-add">+</button>
-        </div>
-        
-        <div class="custom-inputs">
-          <input type="text" id="custom-project" placeholder="Nombre del proyecto..." style="display: none;">
-          <input type="text" id="custom-person" placeholder="Nombre del responsable..." style="display: none;">
-        </div>
-      </form>
-    </div>
-
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 30%;">Tarea</th>
-            <th style="width: 22%;">Proyecto</th>
-            <th style="width: 20%;">Asignado a</th>
-            <th style="width: 13%;">Fecha</th>
-            <th style="width: 10%;">Estado</th>
-            <th style="width: 5%; text-align: right;"></th>
-          </tr>
-        </thead>
-        <tbody id="tasks-table-body"></tbody>
-      </table>
+    <!-- VISTA SECUNDARIA: GALERÍA DE PROYECTOS COMPACTOS -->
+    <div id="cards-view" style="display: none;">
+      <div class="cards-grid" id="cards-container"></div>
     </div>
   </main>
 
+  <!-- MODAL DE LECTURA DE TEXTO LARGO -->
+  <div class="modal-overlay" id="project-modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-line" id="modal-line-txt">Línea</div>
+      <div class="modal-title" id="modal-title-txt">Título Proyecto</div>
+      <div class="modal-body" id="modal-body-txt"></div>
+    </div>
+  </div>
+
   <script>
     const projectStructure = {
-      "Desarrollo Web": ["Sitio Corporativo", "E-commerce", "Portal de Clientes"],
-      "Estrategia Digital": ["Campaña SEO", "Redes Sociales", "Email Marketing"],
-      "Infraestructura": ["Migración Cloud", "Seguridad Informática", "Soporte Técnico"],
-      "Diseño & UI/UX": ["Rediseño de Marca", "Sistema de Diseño", "Prototipo App"],
-      "Gestión Interna": ["Capacitación Equipo", "Auditoría Financiera", "Optimización Procesos"]
+      "Paz": ["MAFAPO", "UP", "ETR", "CPSJA", "JMVR", "CIG"],
+      "Gobernanza": ["CNAPV", "PNAPV"],
+      "Formación e investigación": ["EIAPV", "IE", "ETDH", "INVEST"],
+      "Circulación": ["JUNTXS", "ESTIMS"],
+      "Proyectos especiales": ["MAMBO", "MCR"],
+      "Administrativo": [
+        "Indicadores", 
+        "Convenio A", 
+        "Convenio B", 
+        "Comunicaciones", 
+        "Calendario", 
+        "Presupuesto", 
+        "Comisiones", 
+        "AZ"
+      ]
+    };
+
+    const lineColors = {
+      "Paz": "#fef2f2",
+      "Gobernanza": "#f0fdf4",
+      "Formación e investigación": "#eff6ff",
+      "Circulación": "#fffbebe1",
+      "Proyectos especiales": "#fbf1ff",
+      "Administrativo": "#f8fafc"
+    };
+
+    const projectDetails = {
+      "MAFAPO": {
+        fullText: `
+          <p><strong>Contexto y Visión General:</strong> El proyecto MAFAPO tiene como propósito fundamental articular procesos de memoria histórica, dignificación de las víctimas y búsqueda de verdad e imparcialidad en el marco de las ejecuciones extrajudiciales registradas en Colombia.</p>
+          <p><strong>Objetivos Estratégicos:</strong> Implementar espacios de diálogo territorial, apoyar la construcción de piezas museográficas y promover seminarios de formación ciudadana en DDHH. Asimismo, busca potenciar el liderazgo colectivo de las organizadoras en escenarios institucionales y comunitarios.</p>
+          <p><strong>Metodología de Trabajo:</strong> A través de encuentros periódicos, talleres de creación artística colectiva y sistematización de relatos verbales, la iniciativa consolida un archivo documental vivo para el acceso público y pedagógico.</p>
+        `
+      },
+      "UP": {
+        fullText: `
+          <p><strong>Contexto y Visión General:</strong> Proyecto orientado a la salvaguarda de la memoria política, sistematización de expedientes de reparación y pedagogía social sobre la Unión Patriótica.</p>
+          <p><strong>Acciones Clave:</strong> Creación de catálogos digitales, digitalización de periódicos de la época y difusión de contenidos pedagógicos para la prevención de la violencia política.</p>
+        `
+      }
     };
 
     const personColors = {
       "Todo el equipo": "#111111",
-      "Carlos Gonzalez": "#0284c7",
-      "Jair Torres": "#2563eb",
-      "Jheovany Jacanamejoy": "#059669",
-      "Luisa Villegas": "#d97706",
-      "Maria Paula Maldonado": "#7c3aed",
-      "Mariana Álvarez": "#db2777",
-      "Mariela Silva": "#0891b2",
-      "Sebastian Cruz": "#ea580c"
+      "Carlos": "#0284c7",
+      "Jair": "#2563eb",
+      "Jheovany": "#059669",
+      "Luisa": "#d97706",
+      "Maria Paula": "#7c3aed",
+      "Mariana": "#db2777",
+      "Mariela": "#0891b2",
+      "Sebastian": "#ea580c"
     };
 
     let tasks = loadData();
@@ -344,29 +424,113 @@
       render();
     }
 
-    function initSelectsAndFilters() {
-      const select = document.getElementById('project-select');
-      const categoryFiltersDiv = document.getElementById('category-filters');
+    function switchMainView(view) {
+      const tasksView = document.getElementById('tasks-view');
+      const cardsView = document.getElementById('cards-view');
+      const btnTasks = document.getElementById('view-tasks-btn');
+      const btnCards = document.getElementById('view-cards-btn');
+      const sidebarFilters = document.getElementById('sidebar-filters-section');
 
-      for (const [category, projects] of Object.entries(projectStructure)) {
-        const optgroup = document.createElement('optgroup');
-        optgroup.label = category;
+      if (view === 'tasks') {
+        tasksView.style.display = 'block';
+        cardsView.style.display = 'none';
+        btnTasks.classList.add('active');
+        btnCards.classList.remove('active');
+        sidebarFilters.style.display = 'block';
+      } else {
+        tasksView.style.display = 'none';
+        cardsView.style.display = 'block';
+        btnCards.classList.add('active');
+        btnTasks.classList.remove('active');
+        sidebarFilters.style.display = 'none';
+        renderCardsView();
+      }
+    }
+
+    function renderCardsView() {
+      const container = document.getElementById('cards-container');
+      container.innerHTML = '';
+
+      for (const [line, projects] of Object.entries(projectStructure)) {
+        const bgColor = lineColors[line] || "#ffffff";
 
         projects.forEach(proj => {
-          const option = document.createElement('option');
-          option.value = JSON.stringify({ category, project: proj });
-          option.textContent = proj;
-          optgroup.appendChild(option);
+          const card = document.createElement('div');
+          card.className = 'project-card-small';
+          card.style.backgroundColor = bgColor;
+          card.onclick = () => openModal(line, proj);
+          card.innerHTML = `
+            <div class="card-line">${line}</div>
+            <div class="card-title">${proj}</div>
+          `;
+          container.appendChild(card);
         });
-        select.insertBefore(optgroup, select.lastElementChild);
+      }
+    }
+
+    function openModal(line, project) {
+      const modal = document.getElementById('project-modal');
+      const detail = projectDetails[project] || {
+        fullText: `<p>Aún no se ha cargado el documento extenso de este proyecto.</p>`
+      };
+
+      document.getElementById('modal-line-txt').textContent = line;
+      document.getElementById('modal-title-txt').textContent = project;
+      document.getElementById('modal-body-txt').innerHTML = detail.fullText;
+
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('project-modal').style.display = 'none';
+    }
+
+    function initSelectsAndFilters() {
+      const lineSelect = document.getElementById('line-select');
+      const categoryFiltersDiv = document.getElementById('category-filters');
+
+      lineSelect.innerHTML = '<option value="" disabled selected>Línea / Área...</option>';
+      categoryFiltersDiv.innerHTML = '';
+
+      for (const line of Object.keys(projectStructure)) {
+        const option = document.createElement('option');
+        option.value = line;
+        option.textContent = line;
+        lineSelect.appendChild(option);
 
         const navLink = document.createElement('div');
         navLink.className = 'nav-link';
-        navLink.textContent = category;
-        navLink.onclick = () => setFilter('category', category);
+        navLink.textContent = line;
+        navLink.onclick = () => setFilter('category', line);
         categoryFiltersDiv.appendChild(navLink);
       }
     }
+
+    document.getElementById('line-select').addEventListener('change', (e) => {
+      const line = e.target.value;
+      const projectSelect = document.getElementById('project-select');
+      const customProjectInput = document.getElementById('custom-project');
+
+      projectSelect.innerHTML = '<option value="" disabled selected>Proyecto...</option>';
+      customProjectInput.style.display = 'none';
+      customProjectInput.required = false;
+
+      if (projectStructure[line]) {
+        projectStructure[line].forEach(proj => {
+          const opt = document.createElement('option');
+          opt.value = proj;
+          opt.textContent = proj;
+          projectSelect.appendChild(opt);
+        });
+
+        const otherOpt = document.createElement('option');
+        otherOpt.value = 'OTHER_PROJECT';
+        otherOpt.textContent = 'Otro...';
+        projectSelect.appendChild(otherOpt);
+
+        projectSelect.disabled = false;
+      }
+    });
 
     document.getElementById('project-select').addEventListener('change', (e) => {
       const customProjectInput = document.getElementById('custom-project');
@@ -393,25 +557,20 @@
     document.getElementById('task-form').addEventListener('submit', (e) => {
       e.preventDefault();
       try {
+        const lineVal = document.getElementById('line-select').value;
         const projectVal = document.getElementById('project-select').value;
         const personVal = document.getElementById('person-select').value;
 
-        let category = "Personalizado";
-        let project = "";
-        let person = "";
+        let category = lineVal;
+        let project = projectVal;
+        let person = personVal;
 
         if (projectVal === 'OTHER_PROJECT') {
           project = document.getElementById('custom-project').value.trim();
-        } else {
-          const parsed = JSON.parse(projectVal);
-          category = parsed.category;
-          project = parsed.project;
         }
 
         if (personVal === 'OTHER_PERSON') {
           person = document.getElementById('custom-person').value.trim();
-        } else {
-          person = personVal;
         }
 
         tasks.push({
@@ -425,6 +584,8 @@
         });
 
         document.getElementById('task-form').reset();
+        document.getElementById('project-select').disabled = true;
+        document.getElementById('project-select').innerHTML = '<option value="" disabled selected>Proyecto...</option>';
         document.getElementById('custom-project').style.display = 'none';
         document.getElementById('custom-person').style.display = 'none';
         saveData();
@@ -524,7 +685,7 @@
       if (tasks.length === 0) return;
 
       let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-      csvContent += "ID,Tarea,Categoria,Proyecto,Responsable,Estado,Fecha Creacion\n";
+      csvContent += "ID,Tarea,Linea/Area,Proyecto,Responsable,Estado,Fecha Creacion\n";
 
       tasks.forEach((t, index) => {
         const customId = `TASK-${String(index + 1).padStart(3, '0')}`;
