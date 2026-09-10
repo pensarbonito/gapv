@@ -9,6 +9,7 @@
       --bg: #ffffff;
       --sidebar-bg: #fafafa;
       --border: #f0f0f0;
+      --tree-line: #e2e2e2;
       --text-main: #111111;
       --text-muted: #888888;
     }
@@ -16,32 +17,48 @@
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
-    /* SIDEBAR ULTRA MINIMAL */
+    /* SIDEBAR OPCIÓN C (JERARQUÍA INDENTADA) */
     aside {
-      width: 210px;
+      width: 220px;
       background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
-      padding: 32px 16px;
+      padding: 32px 18px;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
       overflow-y: auto;
     }
 
-    .nav-title { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 16px 0 6px 6px; }
+    .nav-title { 
+      font-size: 10px; 
+      font-weight: 600; 
+      color: var(--text-muted); 
+      text-transform: uppercase; 
+      letter-spacing: 0.06em; 
+      margin: 20px 0 6px 0; 
+    }
     aside .nav-title:first-child { margin-top: 0; }
     
+    .tree-group {
+      border-left: 1px solid var(--tree-line);
+      margin-left: 4px;
+      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
     .nav-link {
-      padding: 6px 8px;
+      padding: 4px 6px;
       border-radius: 4px;
       font-size: 13px;
       color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.1s ease;
-      margin-bottom: 2px;
+      transition: all 0.12s ease;
     }
 
-    .nav-link.active, .nav-link:hover { color: var(--text-main); background: #f0f0f0; }
+    .nav-link.active { color: var(--text-main); font-weight: 600; }
+    .nav-link:hover { color: var(--text-main); background: #f0f0f0; }
 
     .btn-sidebar {
       background: transparent;
@@ -50,12 +67,11 @@
       font-size: 13px;
       cursor: pointer;
       text-align: left;
-      padding: 6px 8px;
+      padding: 4px 6px;
       display: block;
       width: 100%;
       border-radius: 4px;
-      transition: color 0.1s ease;
-      margin-bottom: 2px;
+      transition: all 0.12s ease;
     }
 
     .btn-sidebar:hover { color: var(--text-main); background: #f0f0f0; }
@@ -187,7 +203,7 @@
       flex-direction: column;
       justify-content: space-between;
       aspect-ratio: 1 / 1;
-      transition: transform 0.1s ease, border-color 0.15s ease;
+      transition: border-color 0.15s ease;
     }
 
     .project-card-square:hover {
@@ -249,22 +265,28 @@
 
   <aside>
     <div class="nav-title">Vistas</div>
-    <div class="nav-link active" id="view-tasks-btn" onclick="switchMainView('tasks')">Tareas</div>
-    <div class="nav-link" id="view-cards-btn" onclick="switchMainView('cards')">Proyectos</div>
+    <div class="tree-group">
+      <div class="nav-link active" id="view-tasks-btn" onclick="switchMainView('tasks')">Tareas</div>
+      <div class="nav-link" id="view-cards-btn" onclick="switchMainView('cards')">Proyectos</div>
+    </div>
 
     <div id="sidebar-filters-section">
       <div class="nav-title">Filtros Tareas</div>
-      <div class="nav-link" onclick="setFilter('status', 'all')">Todas</div>
-      <div class="nav-link" onclick="setFilter('status', 'pending')">Pendientes</div>
-      <div class="nav-link" onclick="setFilter('status', 'completed')">Completadas</div>
+      <div class="tree-group">
+        <div class="nav-link" onclick="setFilter('status', 'all')">Todas</div>
+        <div class="nav-link" onclick="setFilter('status', 'pending')">Pendientes</div>
+        <div class="nav-link" onclick="setFilter('status', 'completed')">Completadas</div>
+      </div>
 
       <div class="nav-title">Líneas / Áreas</div>
-      <div id="category-filters"></div>
+      <div class="tree-group" id="category-filters"></div>
     </div>
 
     <div class="nav-title">CSV</div>
-    <button class="btn-sidebar" onclick="downloadCSVReport()">↓ Exportar</button>
-    <button class="btn-sidebar" onclick="document.getElementById('file-input').click()">↑ Importar</button>
+    <div class="tree-group">
+      <button class="btn-sidebar" onclick="downloadCSVReport()">↓ Exportar</button>
+      <button class="btn-sidebar" onclick="document.getElementById('file-input').click()">↑ Importar</button>
+    </div>
     <input type="file" id="file-input" accept=".csv" style="display: none;" onchange="importCSVReport(event)">
   </aside>
 
