@@ -171,30 +171,31 @@
 
     .btn-icon:hover { color: var(--text-main); }
 
-    /* VISTA DE TARJETAS PEQUEÑAS (COMPACTAS) */
+    /* VISTA DE TARJETAS CUADRADAS */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
     }
 
-    .project-card-small {
+    .project-card-square {
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px 14px;
+      border-radius: 8px;
+      padding: 16px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      transition: border-color 0.15s ease;
+      justify-content: space-between;
+      aspect-ratio: 1 / 1;
+      transition: transform 0.1s ease, border-color 0.15s ease;
     }
 
-    .project-card-small:hover {
-      border-color: #bbb;
+    .project-card-square:hover {
+      border-color: #ccc;
     }
 
-    .card-line { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
-    .card-title { font-size: 14px; font-weight: 600; color: var(--text-main); }
+    .card-line { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .card-title { font-size: 15px; font-weight: 600; color: var(--text-main); word-break: break-word; line-height: 1.2; }
 
     /* MODAL LECTURA LARGA */
     .modal-overlay {
@@ -329,7 +330,7 @@
       </div>
     </div>
 
-    <!-- VISTA SECUNDARIA: GALERÍA DE PROYECTOS COMPACTOS -->
+    <!-- VISTA SECUNDARIA: GALERÍA DE PROYECTOS CUADRADOS -->
     <div id="cards-view" style="display: none;">
       <div class="cards-grid" id="cards-container"></div>
     </div>
@@ -456,7 +457,7 @@
 
         projects.forEach(proj => {
           const card = document.createElement('div');
-          card.className = 'project-card-small';
+          card.className = 'project-card-square';
           card.style.backgroundColor = bgColor;
           card.onclick = () => openModal(line, proj);
           card.innerHTML = `
