@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --sidebar-bg: #fafafa;
+      --border: #f0f0f0;
+      --text-main: #111111;
+      --text-muted: #888888;
+    }
+
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+
+    /* SIDEBAR ULTRA MINIMAL */
+    aside {
+      width: 200px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+
+    .nav-title { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 16px 0 6px 6px; }
+    aside .nav-title:first-child { margin-top: 0; }
+    
+    .nav-link {
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.1s ease;
+      margin-bottom: 2px;
+    }
+
+    .nav-link.active, .nav-link:hover { color: var(--text-main); background: #f0f0f0; }
+
+    .btn-sidebar {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+      padding: 5px 8px;
+      display: block;
+      width: 100%;
+      border-radius: 4px;
+      transition: color 0.1s ease;
+      margin-bottom: 2px;
+    }
+
+    .btn-sidebar:hover { color: var(--text-main); background: #f0f0f0; }
+
+    /* CONTENIDO PRINCIPAL CON SCROLL INDEPENDIENTE */
+    main { flex: 1; padding: 40px 48px; overflow-y: auto; max-width: 1100px; }
+
+    /* METRICAS */
+    .metrics-row {
+      display: flex;
+      gap: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+
+    .metric-item { display: flex; align-items: baseline; gap: 6px; }
+    .metric-num { font-size: 18px; font-weight: 600; }
+    .metric-label { font-size: 12px; color: var(--text-muted); }
+
+    /* FORMULARIO DISCRETO */
+    .form-container {
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-inline {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-inline input, .form-inline select {
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      outline: none;
+      color: var(--text-main);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .form-inline input { flex: 2; }
+    .form-inline select { flex: 1; color: var(--text-muted); cursor: pointer; }
+    .form-inline select:focus { color: var(--text-main); }
+
+    .custom-inputs {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .custom-inputs input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px dashed var(--border);
+      padding: 4px 0;
+      font-size: 12px;
+      outline: none;
+      background: transparent;
+    }
+
+    .btn-add {
+      background: none;
+      color: var(--text-main);
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0 8px;
+    }
+
+    /* CONTENEDOR TABLA */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    /* TABLA LIMPIA */
+    table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+
+    th {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 8px 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 12px 4px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .task-title.done { text-decoration: line-through; color: var(--text-muted); }
+    .cat-tag { font-size: 11px; color: var(--text-muted); }
+    .proj-name { font-weight: 500; font-size: 13px; }
+    .date-cell { font-size: 12px; color: var(--text-muted); }
+
+    .person-dot-wrapper { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+
+    .status-pill { font-size: 12px; color: var(--text-muted); }
+    .status-pill.completed { color: var(--text-main); }
+
+    .btn-icon {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 2px 4px;
+    }
+
+    .btn-icon:hover { color: var(--text-main); }
+
+    /* REGALAS PARA DISPOSITIVOS MÓVILES (MÁXIMO 768px DE ANCHO) */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+        height: auto;
+        overflow-y: auto;
+      }
+
+      aside {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px;
+      }
+
+      .nav-title { margin-top: 8px; }
+
+      main {
+        padding: 20px 16px;
+        width: 100%;
+      }
+
+      .metrics-row {
+        gap: 16px;
+        justify-content: space-between;
+      }
+
+      .form-inline {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-inline input, .form-inline select {
+        width: 100%;
+        border-bottom: 1px solid var(--border);
+        padding: 6px 0;
+      }
+
+      .custom-inputs {
+        flex-direction: column;
+      }
+
+      .btn-add {
+        background: var(--text-main);
+        color: #fff;
+        border-radius: 4px;
+        padding: 8px;
+        margin-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside>
+    <div class="nav-title">Filtros</div>
+    <div class="nav-link active" onclick="setFilter('status', 'all')">Todas</div>
+    <div class="nav-link" onclick="setFilter('status', 'pending')">Pendientes</div>
+    <div class="nav-link" onclick="setFilter('status', 'completed')">Completadas</div>
+
+    <div class="nav-title">Categorías</div>
+    <div id="category-filters"></div>
+
+    <div class="nav-title">CSV</div>
+    <button class="btn-sidebar" onclick="downloadCSVReport()">↓ Exportar</button>
+    <button class="btn-sidebar" onclick="document.getElementById('file-input').click()">↑ Importar</button>
+    <input type="file" id="file-input" accept=".csv" style="display: none;" onchange="importCSVReport(event)">
+  </aside>
+
+  <main>
+    <div class="metrics-row">
+      <div class="metric-item"><span class="metric-num" id="stat-total">0</span><span class="metric-label">totales</span></div>
+      <div class="metric-item"><span class="metric-num" id="stat-pending">0</span><span class="metric-label">pendientes</span></div>
+      <div class="metric-item"><span class="metric-num" id="stat-completed">0</span><span class="metric-label">completadas</span></div>
+    </div>
+
+    <div class="form-container">
+      <form id="task-form">
+        <div class="form-inline">
+          <input type="text" id="title" placeholder="Nueva tarea..." required autocomplete="off">
+          <select id="project-select" required>
+            <option value="" disabled selected>Proyecto...</option>
+            <option value="OTHER_PROJECT">Otro...</option>
+          </select>
+          <select id="person-select" required>
+            <option value="" disabled selected>Responsable...</option>
+            <option value="Todo el equipo">Todo el equipo</option>
+            <option value="Carlos Gonzalez">Carlos Gonzalez</option>
+            <option value="Jair Torres">Jair Torres</option>
+            <option value="Jheovany Jacanamejoy">Jheovany Jacanamejoy</option>
+            <option value="Luisa Villegas">Luisa Villegas</option>
+            <option value="Maria Paula Maldonado">Maria Paula Maldonado</option>
+            <option value="Mariana Álvarez">Mariana Álvarez</option>
+            <option value="Mariela Silva">Mariela Silva</option>
+            <option value="Sebastian Cruz">Sebastian Cruz</option>
+            <option value="OTHER_PERSON">Otro...</option>
+          </select>
+          <button type="submit" class="btn-add">+</button>
+        </div>
+        
+        <div class="custom-inputs">
+          <input type="text" id="custom-project" placeholder="Nombre del proyecto..." style="display: none;">
+          <input type="text" id="custom-person" placeholder="Nombre del responsable..." style="display: none;">
+        </div>
+      </form>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30%;">Tarea</th>
+            <th style="width: 22%;">Proyecto</th>
+            <th style="width: 20%;">Asignado a</th>
+            <th style="width: 13%;">Fecha</th>
+            <th style="width: 10%;">Estado</th>
+            <th style="width: 5%; text-align: right;"></th>
+          </tr>
+        </thead>
+        <tbody id="tasks-table-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const projectStructure = {
+      "Desarrollo Web": ["Sitio Corporativo", "E-commerce", "Portal de Clientes"],
+      "Estrategia Digital": ["Campaña SEO", "Redes Sociales", "Email Marketing"],
+      "Infraestructura": ["Migración Cloud", "Seguridad Informática", "Soporte Técnico"],
+      "Diseño & UI/UX": ["Rediseño de Marca", "Sistema de Diseño", "Prototipo App"],
+      "Gestión Interna": ["Capacitación Equipo", "Auditoría Financiera", "Optimización Procesos"]
+    };
+
+    const personColors = {
+      "Todo el equipo": "#111111",
+      "Carlos Gonzalez": "#0284c7",
+      "Jair Torres": "#2563eb",
+      "Jheovany Jacanamejoy": "#059669",
+      "Luisa Villegas": "#d97706",
+      "Maria Paula Maldonado": "#7c3aed",
+      "Mariana Álvarez": "#db2777",
+      "Mariela Silva": "#0891b2",
+      "Sebastian Cruz": "#ea580c"
+    };
+
+    let tasks = loadData();
+    let activeFilterType = 'status';
+    let activeFilterValue = 'all';
+
+    function loadData() {
+      try {
+        const stored = localStorage.getItem('min_dashboard_tasks');
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.error("Storage error:", e);
+        return [];
+      }
+    }
+
+    function saveData() {
+      try {
+        localStorage.setItem('min_dashboard_tasks', JSON.stringify(tasks));
+      } catch (e) {
+        console.error("Save error:", e);
+      }
+      render();
+    }
+
+    function initSelectsAndFilters() {
+      const select = document.getElementById('project-select');
+      const categoryFiltersDiv = document.getElementById('category-filters');
+
+      for (const [category, projects] of Object.entries(projectStructure)) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = category;
+
+        projects.forEach(proj => {
+          const option = document.createElement('option');
+          option.value = JSON.stringify({ category, project: proj });
+          option.textContent = proj;
+          optgroup.appendChild(option);
+        });
+        select.insertBefore(optgroup, select.lastElementChild);
+
+        const navLink = document.createElement('div');
+        navLink.className = 'nav-link';
+        navLink.textContent = category;
+        navLink.onclick = () => setFilter('category', category);
+        categoryFiltersDiv.appendChild(navLink);
+      }
+    }
+
+    document.getElementById('project-select').addEventListener('change', (e) => {
+      const customProjectInput = document.getElementById('custom-project');
+      if (e.target.value === 'OTHER_PROJECT') {
+        customProjectInput.style.display = 'block';
+        customProjectInput.required = true;
+      } else {
+        customProjectInput.style.display = 'none';
+        customProjectInput.required = false;
+      }
+    });
+
+    document.getElementById('person-select').addEventListener('change', (e) => {
+      const customPersonInput = document.getElementById('custom-person');
+      if (e.target.value === 'OTHER_PERSON') {
+        customPersonInput.style.display = 'block';
+        customPersonInput.required = true;
+      } else {
+        customPersonInput.style.display = 'none';
+        customPersonInput.required = false;
+      }
+    });
+
+    document.getElementById('task-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const projectVal = document.getElementById('project-select').value;
+        const personVal = document.getElementById('person-select').value;
+
+        let category = "Personalizado";
+        let project = "";
+        let person = "";
+
+        if (projectVal === 'OTHER_PROJECT') {
+          project = document.getElementById('custom-project').value.trim();
+        } else {
+          const parsed = JSON.parse(projectVal);
+          category = parsed.category;
+          project = parsed.project;
+        }
+
+        if (personVal === 'OTHER_PERSON') {
+          person = document.getElementById('custom-person').value.trim();
+        } else {
+          person = personVal;
+        }
+
+        tasks.push({
+          id: Date.now(),
+          title: document.getElementById('title').value.trim(),
+          category: category,
+          project: project,
+          person: person,
+          done: false,
+          createdAt: new Date().toLocaleDateString('es-ES')
+        });
+
+        document.getElementById('task-form').reset();
+        document.getElementById('custom-project').style.display = 'none';
+        document.getElementById('custom-person').style.display = 'none';
+        saveData();
+      } catch (err) {
+        console.error("Form error:", err);
+      }
+    });
+
+    function getPersonColor(personName) {
+      if (personColors[personName]) return personColors[personName];
+      let hash = 0;
+      for (let i = 0; i < personName.length; i++) {
+        hash = personName.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return `hsl(${Math.abs(hash) % 360}, 60%, 45%)`;
+    }
+
+    function setFilter(type, value) {
+      activeFilterType = type;
+      activeFilterValue = value;
+      render();
+    }
+
+    function render() {
+      updateStats();
+      const tbody = document.getElementById('tasks-table-body');
+      tbody.innerHTML = '';
+
+      const filteredTasks = tasks.filter(t => {
+        if (activeFilterType === 'status') {
+          if (activeFilterValue === 'pending') return !t.done;
+          if (activeFilterValue === 'completed') return t.done;
+          return true;
+        }
+        if (activeFilterType === 'category') return t.category === activeFilterValue;
+        return true;
+      });
+
+      filteredTasks.forEach(task => {
+        const color = getPersonColor(task.person);
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td><span class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</span></td>
+          <td>
+            <div class="proj-name">${escapeHtml(task.project)}</div>
+            <div class="cat-tag">${escapeHtml(task.category)}</div>
+          </td>
+          <td>
+            <div class="person-dot-wrapper">
+              <span class="dot" style="background-color: ${color}"></span>
+              ${escapeHtml(task.person)}
+            </div>
+          </td>
+          <td><span class="date-cell">${task.createdAt || 'N/A'}</span></td>
+          <td>
+            <span class="status-pill ${task.done ? 'completed' : ''}">
+              ${task.done ? 'Completada' : 'Pendiente'}
+            </span>
+          </td>
+          <td style="text-align: right;">
+            <button class="btn-icon" data-action="toggle" data-id="${task.id}">${task.done ? '↩' : '✓'}</button>
+            <button class="btn-icon" data-action="delete" data-id="${task.id}">✕</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('tasks-table-body').addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-icon');
+      if (!btn) return;
+      
+      const action = btn.dataset.action;
+      const id = Number(btn.dataset.id);
+
+      if (action === 'toggle') {
+        tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+        saveData();
+      } else if (action === 'delete') {
+        tasks = tasks.filter(t => t.id !== id);
+        saveData();
+      }
+    });
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = tasks.length;
+      document.getElementById('stat-pending').textContent = tasks.filter(t => !t.done).length;
+      document.getElementById('stat-completed').textContent = tasks.filter(t => t.done).length;
+    }
+
+    function escapeHtml(text) {
+      return text ? text.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])) : '';
+    }
+
+    function downloadCSVReport() {
+      if (tasks.length === 0) return;
+
+      let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+      csvContent += "ID,Tarea,Categoria,Proyecto,Responsable,Estado,Fecha Creacion\n";
+
+      tasks.forEach((t, index) => {
+        const customId = `TASK-${String(index + 1).padStart(3, '0')}`;
+        const cleanTitle = t.title.replace(/\r?\n|\r/g, " ").replace(/"/g, '""');
+        const row = [
+          customId,
+          `"${cleanTitle}"`,
+          `"${t.category}"`,
+          `"${t.project}"`,
+          `"${t.person}"`,
+          t.done ? "Completada" : "Pendiente",
+          t.createdAt || ""
+        ].join(",");
+        csvContent += row + "\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Reporte_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function importCSVReport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const text = e.target.result;
+          const lines = text.split(/\r\n|\n/);
+          if (lines.length < 2) return;
+
+          let importedCount = 0;
+
+          for (let i = 1; i < lines.length; i++) {
+            if (!lines[i].trim()) continue;
+
+            const cols = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || lines[i].split(',');
+            if (cols.length >= 6) {
+              const clean = cols.map(c => c.replace(/^"|"$/g, '').trim());
+              
+              tasks.push({
+                id: Date.now() + Math.random(),
+                title: clean[1] || "Tarea sin título",
+                category: clean[2] || "Personalizado",
+                project: clean[3] || "General",
+                person: clean[4] || "Sin asignar",
+                done: clean[5].toLowerCase() === "completada",
+                createdAt: clean[6] || new Date().toLocaleDateString('es-ES')
+              });
+              importedCount++;
+            }
+          }
+
+          if (importedCount > 0) {
+            saveData();
+          }
+        } catch (err) {
+          console.error("Error al importar CSV:", err);
+        } finally {
+          event.target.value = '';
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    initSelectsAndFilters();
+    render();
+  </script>
+</body>
+</html>
