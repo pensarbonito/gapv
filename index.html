@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Workspace</title>
+  <title>Workspace Minimalista - Proyectos y Tareas</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -14,12 +14,24 @@
       --text-muted: #888888;
     }
 
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+    * { 
+      box-sizing: border-box; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+    }
 
-    /* SIDEBAR OPCIÓN C (JERARQUÍA INDENTADA) */
+    body { 
+      background: var(--bg); 
+      color: var(--text-main); 
+      display: flex; 
+      height: 100vh; 
+      overflow: hidden; 
+    }
+
+    /* SIDEBAR */
     aside {
-      width: 220px;
+      width: 240px;
       background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
       padding: 32px 18px;
@@ -77,9 +89,9 @@
     .btn-sidebar:hover { color: var(--text-main); background: #f0f0f0; }
 
     /* CONTENIDO PRINCIPAL */
-    main { flex: 1; padding: 40px 48px; overflow-y: auto; max-width: 1100px; }
+    main { flex: 1; padding: 40px 48px; overflow-y: auto; max-width: 100%; }
 
-    /* METRICAS */
+    /* METRICAS GENERALES */
     .metrics-row {
       display: flex;
       gap: 36px;
@@ -92,89 +104,146 @@
     .metric-num { font-size: 18px; font-weight: 600; }
     .metric-label { font-size: 12px; color: var(--text-muted); }
 
-    /* FORMULARIO DISCRETO */
-    .form-container {
-      margin-bottom: 28px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .form-inline {
+    /* CONTENEDOR DE PROYECTOS */
+    .columns-container {
       display: flex;
-      gap: 12px;
+      flex-direction: column;
+      gap: 36px;
+      width: 100%;
     }
 
-    .form-inline input, .form-inline select {
-      border: none;
-      background: transparent;
-      font-size: 13px;
-      outline: none;
-      color: var(--text-main);
-      -webkit-appearance: none;
-      -moz-appearance: none;
-    }
-
-    .form-inline input { flex: 2; }
-    .form-inline select { flex: 1; color: var(--text-muted); cursor: pointer; }
-    .form-inline select:focus { color: var(--text-main); }
-
-    .custom-inputs {
+    .category-section {
       display: flex;
-      gap: 12px;
-      margin-top: 8px;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .custom-inputs input {
-      flex: 1;
-      border: none;
-      border-bottom: 1px dashed var(--border);
-      padding: 4px 0;
+    .category-header {
       font-size: 12px;
-      outline: none;
-      background: transparent;
-    }
-
-    .btn-add {
-      background: none;
-      color: var(--text-main);
-      border: none;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 0 8px;
-    }
-
-    /* TABLA */
-    .table-container { width: 100%; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
-
-    th {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--text-muted);
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 8px 4px;
+      letter-spacing: 0.08em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
       border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
     }
 
-    td {
-      padding: 12px 4px;
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* TARJETA DE PROYECTO */
+    .project-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: border-color 0.15s ease;
+    }
+
+    .project-card:hover {
+      border-color: #d1d5db;
+    }
+
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .project-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .project-title:hover {
+      text-decoration: underline;
+    }
+
+    .project-info-btn {
+      background: none;
+      border: none;
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+    }
+    .project-info-btn:hover { color: var(--text-main); background: #f0f0f0; }
+
+    /* LISTA DE TAREAS INTERNA */
+    .project-tasks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .task-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-size: 13px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: #fafafa;
+      border: 1px solid transparent;
+      gap: 8px;
     }
 
-    .task-title.done { text-decoration: line-through; color: var(--text-muted); }
-    .cat-tag { font-size: 11px; color: var(--text-muted); }
-    .proj-name { font-weight: 500; font-size: 13px; }
-    .date-cell { font-size: 12px; color: var(--text-muted); }
+    .task-item-row:hover {
+      background: #f5f5f5;
+      border-color: var(--border);
+    }
 
-    .person-dot-wrapper { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
-    .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
 
-    .status-pill { font-size: 12px; color: var(--text-muted); }
-    .status-pill.completed { color: var(--text-main); }
+    .task-checkbox {
+      cursor: pointer;
+    }
+
+    .task-text {
+      word-break: break-word;
+      color: var(--text-main);
+    }
+
+    .task-text.done {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .task-meta-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .person-name-tag { 
+      font-size: 11px; 
+      color: var(--text-muted); 
+    }
 
     .btn-icon {
       background: none;
@@ -184,36 +253,53 @@
       font-size: 12px;
       padding: 2px 4px;
     }
-
     .btn-icon:hover { color: var(--text-main); }
 
-    /* VISTA DE TARJETAS CUADRADAS */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 16px;
-    }
-
-    .project-card-square {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      cursor: pointer;
+    /* FORMULARIO RÁPIDO */
+    .inline-task-form {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      aspect-ratio: 1 / 1;
-      transition: border-color 0.15s ease;
+      gap: 6px;
+      margin-top: 4px;
     }
 
-    .project-card-square:hover {
-      border-color: #ccc;
+    .inline-task-form input, .inline-task-form select {
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      outline: none;
+      color: var(--text-main);
     }
 
-    .card-line { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-    .card-title { font-size: 15px; font-weight: 600; color: var(--text-main); word-break: break-word; line-height: 1.2; }
+    .inline-task-form input[type="text"] {
+      flex: 2;
+    }
 
-    /* MODAL LECTURA LARGA */
+    .inline-task-form select {
+      flex: 1;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .btn-inline-add {
+      background: var(--text-main);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .no-tasks-msg {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 4px 0;
+    }
+
+    /* MODAL DE LECTURA */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -254,108 +340,99 @@
       aside { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
       main { padding: 20px 16px; width: 100%; }
       .metrics-row { gap: 16px; justify-content: space-between; }
-      .form-inline { flex-direction: column; gap: 8px; }
-      .form-inline input, .form-inline select { width: 100%; border-bottom: 1px solid var(--border); padding: 6px 0; }
-      .custom-inputs { flex-direction: column; }
-      .btn-add { background: var(--text-main); color: #fff; border-radius: 4px; padding: 8px; margin-top: 4px; }
+      .projects-grid { grid-template-columns: 1fr; }
     }
+ 
+    /* MODALES EXTERNOS */
+    .modal-content.modal-wide {
+      max-width: 900px;
+    }
+
+    .modal-content.modal-wide .modal-body {
+      overflow-x: auto;
+    }
+
+    /* Estilos de las tablas dentro de los modales */
+.tabla-modal {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.tabla-modal th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  padding: 10px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.tabla-modal td {
+  padding: 10px;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: top;
+}
+
+.tabla-modal tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tabla-modal a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.tabla-modal a:hover {
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
 
   <aside>
-    <div class="nav-title">Vistas</div>
+    <!-- 1. Estado -->
+    <div class="nav-title">Estado Tareas</div>
+    <div class="tree-group" id="status-filters">
+      <div class="nav-link active" onclick="setStatusFilter('all', this)">Todas</div>
+      <div class="nav-link" onclick="setStatusFilter('pending', this)">Pendientes</div>
+      <div class="nav-link" onclick="setStatusFilter('completed', this)">Completadas</div>
+    </div>
+
+    <!-- 2. Líneas / Áreas -->
+    <div class="nav-title">Líneas / Áreas</div>
+    <div class="tree-group" id="category-filters"></div>
+
+    <!-- 3. Responsables -->
+    <div class="nav-title">Responsables</div>
+    <div class="tree-group" id="person-filters"></div>
+
+    <!-- 4. Externo -->
+    <div class="nav-title">Externo</div>
     <div class="tree-group">
-      <div class="nav-link active" id="view-tasks-btn" onclick="switchMainView('tasks')">Tareas</div>
-      <div class="nav-link" id="view-cards-btn" onclick="switchMainView('cards')">Proyectos</div>
+      <div class="nav-link" onclick="abrirModal('modal-directorio')">Directorio</div>
+      <div class="nav-link" onclick="abrirModalEnlaces()">Enlaces</div>
     </div>
 
-    <div id="sidebar-filters-section">
-      <div class="nav-title">Filtros Tareas</div>
-      <div class="tree-group">
-        <div class="nav-link" onclick="setFilter('status', 'all')">Todas</div>
-        <div class="nav-link" onclick="setFilter('status', 'pending')">Pendientes</div>
-        <div class="nav-link" onclick="setFilter('status', 'completed')">Completadas</div>
-      </div>
-
-      <div class="nav-title">Líneas / Áreas</div>
-      <div class="tree-group" id="category-filters"></div>
-    </div>
-
-    <div class="nav-title">CSV</div>
+    <!-- 5. CSV / Datos -->
+    <div class="nav-title">CSV / Datos</div>
     <div class="tree-group">
       <button class="btn-sidebar" onclick="downloadCSVReport()">↓ Exportar</button>
       <button class="btn-sidebar" onclick="document.getElementById('file-input').click()">↑ Importar</button>
     </div>
     <input type="file" id="file-input" accept=".csv" style="display: none;" onchange="importCSVReport(event)">
+
   </aside>
 
   <main>
-    <!-- VISTA PRINCIPAL: TABLA DE TAREAS -->
-    <div id="tasks-view">
-      <div class="metrics-row">
-        <div class="metric-item"><span class="metric-num" id="stat-total">0</span><span class="metric-label">totales</span></div>
-        <div class="metric-item"><span class="metric-num" id="stat-pending">0</span><span class="metric-label">pendientes</span></div>
-        <div class="metric-item"><span class="metric-num" id="stat-completed">0</span><span class="metric-label">completadas</span></div>
-      </div>
-
-      <div class="form-container">
-        <form id="task-form">
-          <div class="form-inline">
-            <input type="text" id="title" placeholder="Nueva tarea..." required autocomplete="off">
-            
-            <select id="line-select" required>
-              <option value="" disabled selected>Línea / Área...</option>
-            </select>
-
-            <select id="project-select" required disabled>
-              <option value="" disabled selected>Proyecto...</option>
-            </select>
-
-            <select id="person-select" required>
-              <option value="" disabled selected>Responsable...</option>
-              <option value="Todo el equipo">Todo el equipo</option>
-              <option value="Carlos">Carlos</option>
-              <option value="Jair">Jair</option>
-              <option value="Jheovany">Jheovany</option>
-              <option value="Luisa">Luisa</option>
-              <option value="Maria Paula">Maria Paula</option>
-              <option value="Mariana">Mariana</option>
-              <option value="Mariela">Mariela</option>
-              <option value="Sebastian">Sebastian</option>
-              <option value="OTHER_PERSON">Otro...</option>
-            </select>
-            <button type="submit" class="btn-add">+</button>
-          </div>
-          
-          <div class="custom-inputs">
-            <input type="text" id="custom-project" placeholder="Nombre del proyecto..." style="display: none;">
-            <input type="text" id="custom-person" placeholder="Nombre del responsable..." style="display: none;">
-          </div>
-        </form>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 30%;">Tarea</th>
-              <th style="width: 22%;">Proyecto / Línea</th>
-              <th style="width: 20%;">Asignado a</th>
-              <th style="width: 13%;">Fecha</th>
-              <th style="width: 10%;">Estado</th>
-              <th style="width: 5%; text-align: right;"></th>
-            </tr>
-          </thead>
-          <tbody id="tasks-table-body"></tbody>
-        </table>
-      </div>
+    <div class="metrics-row">
+      <div class="metric-item"><span class="metric-num" id="stat-total">0</span><span class="metric-label">tareas totales</span></div>
+      <div class="metric-item"><span class="metric-num" id="stat-pending">0</span><span class="metric-label">pendientes</span></div>
+      <div class="metric-item"><span class="metric-num" id="stat-completed">0</span><span class="metric-label">completadas</span></div>
     </div>
 
-    <!-- VISTA SECUNDARIA: GALERÍA DE PROYECTOS CUADRADOS -->
-    <div id="cards-view" style="display: none;">
-      <div class="cards-grid" id="cards-container"></div>
-    </div>
+    <div class="columns-container" id="projects-container"></div>
   </main>
 
   <!-- MODAL DE LECTURA DE TEXTO LARGO -->
@@ -368,65 +445,361 @@
     </div>
   </div>
 
+  <!-- MODAL DIRECTORIO -->
+  <div class="modal-overlay" id="modal-directorio" onclick="cerrarAlDarClicAfuera(event, 'modal-directorio')">
+    <div class="modal-content modal-wide">
+      <button class="modal-close" onclick="cerrarModal('modal-directorio')">✕</button>
+      <div class="modal-line">Externo</div>
+      <div class="modal-title">Directorio del Equipo</div>
+      <div class="modal-body">
+        <table class="tabla-modal">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cargo / Rol</th>
+              <th>Proyecto</th>
+              <th>Contacto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Luz Marina Bernal</strong></td>
+              <td>Líder de Proyecto</td>
+              <td>MAFAPO</td>
+              <td><a href="mailto:contacto@mafapo.org">contacto@mafapo.org</a></td>
+            </tr>
+            <tr>
+              <td><strong>Carlos Andrés Gómez</strong></td>
+              <td>Coordinador de Archivo</td>
+              <td>UP / IE</td>
+              <td><a href="mailto:cgomez@arte.gov.co">cgomez@arte.gov.co</a></td>
+            </tr>
+            <tr>
+              <td><strong>Mariana Castro</strong></td>
+              <td>Gestora Operativa</td>
+              <td>EIAPV / JUNTXS</td>
+              <td><a href="mailto:mcastro@arte.gov.co">mcastro@arte.gov.co</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ENLACES -->
+  <div class="modal-overlay" id="modal-enlaces" onclick="cerrarAlDarClicAfuera(event, 'modal-enlaces')">
+    <div class="modal-content modal-wide">
+      <button class="modal-close" onclick="cerrarModal('modal-enlaces')">✕</button>
+      <div class="modal-line">Externo</div>
+      <div class="modal-title">Enlaces de Proyectos</div>
+      <div class="modal-body">
+        <table class="tabla-modal">
+          <thead>
+            <tr>
+              <th style="width: 30%;">Proyecto</th>
+              <th style="width: 70%;">Enlaces e Instituciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-enlaces-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
   <script>
     const projectStructure = {
       "Paz": ["MAFAPO", "UP", "ETR", "CPSJA", "JMVR", "CIG"],
       "Gobernanza": ["CNAPV", "PNAPV"],
-      "Formación e investigación": ["EIAPV", "IE", "ETDH", "INVEST"],
-      "Circulación": ["JUNTXS", "ESTIMS"],
-      "Proyectos especiales": ["MAMBO", "MCR"],
+      "Formación e investigación": ["EIAPV", "IE", "ETDH", "INVEST", "GESCON"],
+      "Circulación": ["JUNTXS", "Estimulos"],
+      "Salones de artistas": ["47 SNA", "18 SRA","48 SNA", "19 SRA"],
+      "Proyectos especiales": ["MAMBO", "MCR", "Voces y saberes"],
       "Administrativo": [
-        "Indicadores", 
-        "Convenio A", 
-        "Convenio B", 
+        "Convenio Ateneo 1684 ❘ 2025",
+        "Convenio Arteria 1478 ❘ 2025", 
+        "Convenio Arteria 0965 ❘ 2026", 
+        "Convenio ❘ 2027", 
+        "Indicadores",
+        "Gestion documental",
         "Comunicaciones", 
-        "Calendario", 
-        "Presupuesto", 
+        "Calendario",
         "Comisiones", 
-        "AZ"
+        "AZ PQRS"
       ]
     };
 
-    const lineColors = {
-      "Paz": "#fef2f2",
-      "Gobernanza": "#f0fdf4",
-      "Formación e investigación": "#eff6ff",
-      "Circulación": "#fffbebe1",
-      "Proyectos especiales": "#fbf1ff",
-      "Administrativo": "#f8fafc"
-    };
+    const teamMembers = [
+      "Todo el equipo",
+      "Carlos",
+      "Jair",
+      "Jheovany",
+      "Luisa",
+      "Maria Paula",
+      "Mariana",
+      "Mariela",
+      "Sebastian"
+    ];
 
-    const projectDetails = {
+   const projectDetails = {
+      // ==========================================
+      // LÍNEA: PAZ
+      // ==========================================
       "MAFAPO": {
         fullText: `
-          <p><strong>Contexto y Visión General:</strong> El proyecto MAFAPO tiene como propósito fundamental articular procesos de memoria histórica, dignificación de las víctimas y búsqueda de verdad e imparcialidad en el marco de las ejecuciones extrajudiciales registradas en Colombia.</p>
-          <p><strong>Objetivos Estratégicos:</strong> Implementar espacios de diálogo territorial, apoyar la construcción de piezas museográficas y promover seminarios de formación ciudadana en DDHH. Asimismo, busca potenciar el liderazgo colectivo de las organizadoras en escenarios institucionales y comunitarios.</p>
-          <p><strong>Metodología de Trabajo:</strong> A través de encuentros periódicos, talleres de creación artística colectiva y sistematización de relatos verbales, la iniciativa consolida un archivo documental vivo para el acceso público y pedagógico.</p>
+          <p>Tejidos de memoria viva, arte visual y justicia restaurativa en Colombia</p>
+          <p>El proyecto MAFAPO articuló procesos de memoria histórica, dignificación y justicia simbólica para las víctimas de ejecuciones extrajudiciales en Colombia. A través de la investigación participativa y metodologías artísticas contemporáneas, la iniciativa consolidó un espacio permanente donde el tejido, la pintura y la narrativa testimonial sirvieron como herramientas pedagógicas fundamentales ante la sociedad civil. Las acciones desarrolladas por el colectivo integraron el registro audiovisual de testimonios directos, la construcción colectiva de piezas textiles comunitarias de gran escala y el acompañamiento técnico en la formulación de proyectos expositivos en museos locales e internacionales. Este enfoque interdisciplinario no solo visibilizó el profundo impacto del conflicto armado en las familias vulneradas, sino que promovió activamente el empoderamiento político y social de las mujeres como lideresas y guardianas del tejido social territorial. En el marco de la gestión cultural regional, el proyecto desplegó laboratorios de creación colectiva donde el objeto artístico se transformó en un dispositivo de sanación y archivo histórico alternativo. Se organizaron talleres itinerantes en instituciones educativas y espacios comunitarios para dialogar abiertamente sobre los derechos humanos, la reparación integral y las garantías de no repetición de los hechos violentos. Asimismo, el proyecto promovió alianzas estratégicas con plataformas museales y universidades para garantizar la conservación física y digital de los archivos testimoniales. Mediante este engranaje pedagógico e institucional, MAFAPO fortaleció el rol transformador del arte público, trascendiendo el dolor hacia una dimensión de resistencia pacificadora, dignificación comunitaria y exigencia de verdad histórica ante los órganos nacionales e internacionales de justicia y memoria.</p>
+          <p><a href="https://www.centrodememoriahistorica.gov.co" target="_blank" rel="noopener noreferrer">Centro Nacional de Memoria Histórica</a><br><a href="https://www.jep.gov.co" target="_blank" rel="noopener noreferrer">Jurisdicción Especial para la Paz (JEP)</a></p>
         `
       },
       "UP": {
         fullText: `
-          <p><strong>Contexto y Visión General:</strong> Proyecto orientado a la salvaguarda de la memoria política, sistematización de expedientes de reparación y pedagogía social sobre la Unión Patriótica.</p>
-          <p><strong>Acciones Clave:</strong> Creación de catálogos digitales, digitalización de periódicos de la época y difusión de contenidos pedagógicos para la prevención de la violencia política.</p>
+          <p>Salvaguarda documental, pedagogía social y reparación simbólica</p>
+          <p>La iniciativa UP centró su horizonte operacional en la preservación documental, la conservación de prensa histórica y la difusión pedagógica sobre el proceso de exterminio político sufrido por la Unión Patriótica. Mediante procesos avanzados de digitalización masiva, sistematización de expedientes y la creación de catálogos interconectados de libre acceso, el proyecto buscó restituir el valor democrático del archivo histórico como bien público inalienable. A través de seminarios universales y exhibiciones documentales en bibliotecas regionales, la ciudadanía accedió a un corpus informativo crítico sobre los derechos de participación democratizadora y las garantías políticas en tiempos de postconflicto. Adicionalmente, el proyecto coordinó mesas de trabajo técnico para garantizar la interoperabilidad de las colecciones de archivo con bibliotecas públicas y la Comisión de la Verdad. Se promovieron talleres territoriales de archivo comunitario donde supervivientes y familiares aportaron cartas, fotografías, afiches y grabaciones magnéticas que alimentaron la memoria viva. La estrategia contempló publicaciones académicas, podcasts pedagógicos y herramientas interactivo-digitales diseñadas para el público joven, fomentando una lectura integral sobre la no violencia, la convivencia democrática y el pensamiento crítico en la esfera política colombiana.</p>
+          <p><a href="https://www.archivogeneral.gov.co" target="_blank" rel="noopener noreferrer">Archivo General de la Nación</a><br><a href="https://www.comisiondelaverdad.co" target="_blank" rel="noopener noreferrer">Comisión de la Verdad</a></p>
+        `
+      },
+      "ETR": {
+        fullText: `
+          <p>Laboratorios pedagógicos para la mediación comunitaria y convivencia en el territorio</p>
+          <p>El proyecto ETR descentralizó los procesos pedagógicos sobre reconciliación y convivencia pacificadora en las zonas rurales más impactadas por la confrontación armada. La iniciativa implementó laboratorios de creación y formación en municipios PDET, combinando la mediación comunitaria con dinámicas artísticas tradicionales como la danza, el teatro del oprimido y la música tradicional. Se pretendió dotar a líderes veredales y juveniles de conocimientos metodológicos para la resolución alternativa de conflictos sociales y ambientales en sus entornos cotidianos. El plan de trabajo integró módulos presenciales de formación teórica sobre DDHH junto a talleres prácticos de formulación de iniciativas locales de paz. La estructura del proyecto evaluó el impacto del tejido comunitario, apoyando la conformación de redes de facilitadores locales que dinamicen el encuentro entre actores diversos de la sociedad rural. Mediante festivales comunitarios y muestras artísticas locales, el ETR fomentó espacios inclusivos que reescribieron los lazos de confianza social, el sentido de pertenencia territorial y el dinamismo cultural descentralizado.</p>
+          <p><a href="https://www.renovacionterritorio.gov.co" target="_blank" rel="noopener noreferrer">Agencia de Renovación del Territorio</a><br><a href="https://www.altacomisionadoparalapaz.gov.co" target="_blank" rel="noopener noreferrer">Oficina del Consejero Comisionado de Paz</a></p>
+        `
+      },
+      "CPSJA": {
+        fullText: `
+          <p>Practicas psicosociales y dispositivos estéticos de reparación emocional</p>
+          <p>CPSJA articuló esfuerzos entre la intervención psicosocial y el arte contemporáneo para propiciar espacios de sanación emocional en comunidades sobrevivientes de violencia. Entendiendo que la afectación del conflicto impacta la dimensión simbólica y sensible de los seres humanos, el proyecto utilizó la cerámica, el cuerpo en movimiento, el bordado y la sonoridad para tramitar duelos colectivos, construir refugios expresivos y restaurar la autoestima comunitaria. Con un equipo multidisciplinario compuesto por psicólogos, terapeutas y creadores plásticos, CPSJA actuó en asentamientos urbanos y zonas rurales. Se desplegaron encuentros periódicos donde el cuidado mutuo, la escucha empática y la elaboración estético-simbólica permitieron convertir las vivencias traumáticas en narrativas de resiliencia y esperanza. La divulgación de las bitácoras creativas de los participantes generó mayor empatía social y promovió la valoración del arte como salud pública y pilar en la paz duradera.</p>
+          <p><a href="https://www.minsalud.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de Salud y Protección Social - PAPSIVI</a><br><a href="https://www.unidadvictimas.gov.co" target="_blank" rel="noopener noreferrer">Unidad para las Víctimas</a></p>
+        `
+      },
+      "JMVR": {
+        fullText: `
+          <p>Plataformas digitales, narrativa transmedia y liderazgo juvenil por la paz</p>
+          <p>Este proyecto fomentó la vinculación de jóvenes creadores en la formulación de relatos transmedia orientados a la defensa de la memoria histórica y la verdad en sus regiones. Mediante laboratorios de producción audiovisual, desarrollo de videojuegos narrativos, podcasts comunitarios e ilustración digital, JMVR empoderó a las nuevas generaciones para que fueran ellas quienes investigaran, relataran y cuestionaran las causas y consecuencias de los procesos violentos de sus entornos. La estrategia incluyó ciclos formativos con mentores en realización audiovisual, periodismo de investigación y diseño de interacción digital. Los productos resultantes de los laboratorios formaron parte de una plataforma web interactiva de libre acceso que buscó conectar experiencias juveniles de diversos departamentos. El proyecto estimuló la conformación de redes regionales de comunicadores y artistas jóvenes comprometidos con el pensamiento crítico, la pluralidad ideológica y la no violencia activa.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de las Culturas, las Artes y los Saberes</a><br><a href="https://www.colombiajoven.gov.co" target="_blank" rel="noopener noreferrer">Colombia Joven</a></p>
+        `
+      },
+      "CIG": {
+        fullText: `
+          <p>Mapeo participativo de iniciativas culturales de paz e indicadores territoriales</p>
+          <p>CIG se concibió como una infraestructura técnica de datos y conocimiento para la georreferenciación de las iniciativas culturales de construcción de paz en el país. El proyecto recopiló, organizó e interactuó con capas geoespaciales para visibilizar la ubicación, alcance, enfoque de género y redes de colaboración de los diversos colectivos artísticos en los municipios prioritarios. Utilizando tecnologías de código abierto y procesos de cartografía social comunitaria, CIG produjo diagnósticos actualizados que sirvieron de insumo para la toma de decisiones públicas, la investigación académica y la financiación focalizada de la cooperación internacional. Los mapas dinámicos permitieron identificar zonas desatendidas o en alto riesgo, fortaleciendo la capacidad de articulación entre organizaciones de base, entidades estatales y aliados multilaterales.</p>
+          <p><a href="https://www.igac.gov.co" target="_blank" rel="noopener noreferrer">Instituto Geográfico Agustín Codazzi (IGAC)</a><br><a href="https://www.dane.gov.co" target="_blank" rel="noopener noreferrer">DANE - Geoportal</a></p>
+        `
+      },
+
+      // ==========================================
+      // LÍNEA: GOBERNANZA
+      // ==========================================
+      "CNAPV": {
+        fullText: `
+          <p>Mecanismos institucionales de concertación y veeduría cultural comunitaria</p>
+          <p>El CNAPV consolidó una estructura de participación ciudadana y concertación entre la administración pública, creadores, gestores y la comunidad organizada a escala barrial y vecinal. Este proyecto promovió la descentralización de las decisiones culturales, permitiendo que los consejos locales evaluaran las prioridades de inversión, orientaran el diseño de convocatorias y propusieran normativas protectoras del patrimonio cultural inmaterial del entorno barrial. A lo largo de su implementación, el proyecto ejecutó asambleas de diagnóstico participativo, talleres de formación en gestión pública cultural y sesiones ordinarias de deliberación democrática. CNAPV buscó construir puentes sólidos entre las políticas nacionales y las necesidades reales del ecosistema creativo territorial, fortaleciendo el ejercicio del control social sobre los recursos estatales asignados al fomento artístico.</p>
+          <p><a href="https://www.mininterior.gov.co" target="_blank" rel="noopener noreferrer">Ministerio del Interior - Participación Ciudadana</a><br><a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener noreferrer">Departamento Administrativo de la Función Pública</a></p>
+        `
+      },
+      "PNAPV": {
+        fullText: `
+          <p>Marco estratégico decenal y articulación intersectorial de políticas públicas</p>
+          <p>PNAPV estableció la hoja de ruta y la formulación técnica de la política pública decenal de las artes y la participación comunitaria. La iniciativa integró la recopilación de aportes conceptuales, la realización de foros sectoriales y la concertación interinstitucional con los ministerios de Educación, Hacienda y Comercio para situar a las artes en el centro del desarrollo social integral del país. El plan articuló una batería de indicadores de seguimiento que evaluaron el impacto del acceso a la oferta artística, la sostenibilidad económica de los creadores y la diversidad cultural de las expresiones protegidas. Mediante auditorías de seguimiento y mesas técnicas anuales, PNAPV monitoreó el nivel de ejecución presupuestal y garantizó el cumplimiento normativo de las metas de desarrollo económico, social e inclusivo trazadas por el Estado.</p>
+          <p><a href="https://www.dnp.gov.co" target="_blank" rel="noopener noreferrer">Departamento Nacional de Planeación (DNP)</a><br><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de las Culturas, las Artes y los Saberes</a></p>
+        `
+      },
+
+      // ==========================================
+      // LÍNEA: FORMACIÓN E INVESTIGACIÓN
+      // ==========================================
+      "EIAPV": {
+        fullText: `
+          <p>Formación artística no formal y saberes tradicionales descentralizados</p>
+          <p>EIAPV fue un modelo educativo itinerante estructurado para la formación artística no formal y el rescate de saberes empíricos en zonas apartadas de los grandes centros urbanos. El proyecto desplegó módulos de formación en literatura, artes plásticas, danza, música y medios interactivos, adaptados a las singularidades culturales y lenguas propias de cada región visitada. Con un fuerte enfoque de pedagogía crítica, EIAPV fomentó que los sabedores locales, artesanos y maestros populares compartieran sus conocimientos en igualdad de condiciones con tutores académicos de formación universitaria. Esta sinergia enriqueció el aprendizaje mutuo, estimuló la conservación de las identidades locales y facilitó procesos de titulación e inclusión de capacidades técnicas para jóvenes en situación de vulnerabilidad.</p>
+          <p><a href="https://www.mineducacion.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de Educación Nacional</a><br><a href="https://www.sena.edu.co" target="_blank" rel="noopener noreferrer">SENA - Formación Técnica</a></p>
+        `
+      },
+      "IE": {
+        fullText: `
+          <p>Becas de investigación, pensamiento crítico y publicaciones sobre arte contemporáneo</p>
+          <p>El proyecto IE promovió el desarrollo de investigaciones teóricas, históricas y críticas en torno al ecosistema de las artes visuales en Colombia y Latinoamérica. La iniciativa coordinó programas de becas de investigación, residencias de escritura crítica y laboratorios de curaduría para indagar en la producción artística contemporánea y sus vínculos con los problemas políticos, raciales, ecológicos y de género. A través de una sólida política editorial, el proyecto editó libros académicos, catálogos razonados de autores nacionales y plataformas de libre descarga digital. Se realizaron coloquios internacionales y seminarios donde investigadores de diversos orígenes compartieron avances analíticos, consolidando redes de conocimiento entre universidades, centros independientes y la red de museos públicos.</p>
+          <p><a href="https://minciencias.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de Ciencia, Tecnología e Innovación</a><br><a href="https://www.banrepcultural.org" target="_blank" rel="noopener noreferrer">Red Cultural del Banco de la República</a></p>
+        `
+      },
+      "ETDH": {
+        fullText: `
+          <p>Certificación de competencias, oficios del arte y empleabilidad</p>
+          <p>ETDH impulsó la homologación, certificación e instrucción técnica en oficios vinculados al sector cultural, tales como la tramoya, el diseño de iluminación, el montaje expositivo, la restauración de bienes muebles y la sonotecnia. El proyecto respondió a la necesidad de profesionalizar a los trabajadores operativos de las artes que tradicionalmente se han formado en la práctica directa sin reconocimientos académicos oficiales. Mediante alianzas con centros de formación técnica, museos y teatros públicos, el proyecto adecuó diseños curriculares por competencias acordes a los requerimientos del mercado laboral actual. Se otorgaron becas de matrícula y apoyos de sostenimiento a estudiantes, aumentando los índices de formalización laboral y elevando los estándares de seguridad, gestión técnica y sostenibilidad en la producción artística nacional.</p>
+          <p><a href="https://www.sena.edu.co" target="_blank" rel="noopener noreferrer">SENA</a><br><a href="https://www.mintrabajo.gov.co" target="_blank" rel="noopener noreferrer">Ministerio del Trabajo</a></p>
+        `
+      },
+      "INVEST": {
+        fullText: `
+          <p>Análisis de datos sociodemográficos, impacto económico y diagnóstico de la cultura</p>
+          <p>INVEST gestionó el fondo público para el estudio continuo del impacto económico, social y cultural del arte en la economía nacional. El proyecto aplicó herramientas de recolección de datos, encuestas de consumo cultural y modelos econométricos para comprender las dinámicas de sostenibilidad de los artistas independientes y las entidades culturales del país. Los reportes producidos por INVEST sirvieron de base empírica para fundamentar la creación de incentivos fiscales, políticas de seguridad social para artistas e iniciativas de fomento productivo. El observatorio publicó boletines estadísticos trimestrales y mantuvo un portal georreferenciado de datos abiertos de consulta pública para investigadores, gestores públicos y tomadores de decisiones de la economía creativa.</p>
+          <p><a href="https://www.dane.gov.co" target="_blank" rel="noopener noreferrer">DANE - Cuenta Satélite de Cultura</a><br><a href="https://www.dnp.gov.co" target="_blank" rel="noopener noreferrer">DNP - Estudios Económicos</a></p>
+        `
+      },
+      "GESCON": {
+        fullText: `
+          <p>Redes de aprendizaje, transferencia metodológica y repositorios institucionales</p>
+          <p>GESCON diseñó la arquitectura de transferencia de saberes pedagógicos y metodológicos dentro del sistema de formación artística nacional. El proyecto buscó formalizar las mejores prácticas desarrolladas por docentes y mentores, traduciéndolas en manuales metodológicos, guías interactivas y repositorios digitales accesibles para todo el cuerpo docente del sector cultural. La iniciativa organizó diplomados, seminarios web e intercambios docentes a escala nacional e internacional para promover el fortalecimiento pedagógico de la enseñanza de las artes. GESCON incentivó las comunidades de aprendizaje colaborativo, asegurando que la innovación metodológica permanezca en la memoria institucional y beneficie continuamente a las futuras promociones de estudiantes.</p>
+          <p><a href="https://www.colombiaaprende.edu.co" target="_blank" rel="noopener noreferrer">Portal Colombia Aprende</a><br><a href="https://www.unesco.org" target="_blank" rel="noopener noreferrer">UNESCO - Educación Artística</a></p>
+        `
+      },
+
+      // ==========================================
+      // LÍNEA: CIRCULACIÓN
+      // ==========================================
+      "JUNTXS": {
+        fullText: `
+          <p>Intercambio cultural interregional, itinerancias y redes creativas</p>
+          <p>JUNTXS facilitó la movilidad sostenible e integrada de producciones teatrales, exposiciones de artes plásticas, ensambles musicales y compañías de danza a lo largo de los territorios colombianos. El proyecto financió viáticos, pasajes, montajes de carga y seguros de obras, permitiendo que creaciones de zonas periféricas llegaran a los grandes escenarios de las capitales y viceversa. Con un enfoque incluyente y descentralizado, JUNTXS organizó circuitos de circulación estructurados en redes de teatros públicos, centros culturales municipales y plazas abiertas. Además de las muestras de cara al público, el proyecto exigió que cada delegación artística desarrollara talleres de formación o encuentros comunitarios en las localidades que visitó, enriqueciendo el diálogo interregional y descentralizando la oferta de espectáculos de alta calidad.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de las Culturas - Dirección de Artes</a><br><a href="https://www.teatrocolon.gov.co" target="_blank" rel="noopener noreferrer">Teatro Colón de Bogotá</a></p>
+        `
+      },
+      "Estimulos": {
+        fullText: `
+          <p>Fomento público, democratización del presupuesto y apoyo a la creación independiente</p>
+          <p>El Programa de Estímulos constituyó el eje estructurante del financiamiento público a la creación, investigación y circulación artística independiente en el país. El proyecto diseñó, difundió y evaluó anualmente convocatorias abiertas que entregaron becas, premios y pasantías a creadores de todas las disciplinas, priorizando la equidad de género, la inclusión étnica y el equilibrio territorial. A través de una plataforma tecnológica automatizada y la conformación de jurados independientes de reconocida trayectoria, el proyecto garantizó transparencia, objetividad e imparcialidad en la asignación de recursos. Estímulos realizó también jornadas regionales de tutoría técnica para capacitar a gestores emergentes en la formulación adecuada de sus propuestas, ampliando significativamente la tasa de participación comunitaria e histórica.</p>
+          <p><a href="https://sistemaconvocatorias.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Portafolio del Programa Nacional de Estímulos</a><br><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Convocatorias MinCulturas</a></p>
+        `
+      },
+
+      // ==========================================
+      // LÍNEA: SALONES DE ARTISTAS
+      // ==========================================
+      "47 SNA": {
+        fullText: `
+          <p>Curaduría colectiva, itinerancias y reflexión sobre las artes contemporáneas</p>
+          <p>El 47° Salón Nacional de Artistas constituyó el certamen público de mayor trayectoria y relevancia en las artes visuales de Colombia. El proyecto abarcó la investigación curatorial descentralizada, la producción de obras inéditas de gran formato, las publicaciones teóricas y el despliegue de muestras temporales en múltiples sedes museales e históricas de la ciudad anfitriona. Con un concepto que trascendió la simple exhibición, el 47 SNA incorporó componentes pedagógicos, acciones en el espacio público, programas radiales y residencias de investigación. La propuesta planteó preguntas críticas sobre las dinámicas territoriales, las ecologías políticas y las tensiones sociales contemporáneas, proyectando el talento artístico colombiano hacia la escena internacional mediante la invitación a curadores, críticos y programadores extranjeros.</p>
+          <p><a href="https://47sna.com" target="_blank" rel="noopener noreferrer">Sitio Oficial 47 SNA</a><br><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de las Culturas - Artes Visuales</a></p>
+        `
+      },
+      "18 SRA": {
+        fullText: `
+          <p>Procesos curatoriales zonales y visibilización del pensamiento artístico regional</p>
+          <p>Los Salones Regionales de Artistas en su versión 18 fueron la plataforma de investigación y exhibición que dinamizó la creación visual en las distintas zonas geográficas del país (Pacífico, Caribe, Centro, Amazonía, Orinoquía y Sur-Occidente). El proyecto apoyó equipos curatoriales locales que seleccionaron, acompañaron y exhibieron las producciones de creadores emergentes en sus propios contextos culturales. A través de laboratorios de producción y muestras itinerantes en Casas de la Cultura y museos regionales, el 18 SRA cuestionó las narrativas centralistas y resaltó la diversidad identitaria y lingüística del territorio nacional. Los resultados curatoriales nutrieron el cuerpo expositivo y conceptual que alimentará la siguiente edición del Salón Nacional de Artistas.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Salones Regionales de Artistas</a><br><a href="https://www.banrepcultural.org" target="_blank" rel="noopener noreferrer">Red de Centros Culturales BanRep</a></p>
+        `
+      },
+      "48 SNA": {
+        fullText: `
+          <p>Investigación prospectiva, diseño curricular y convocatoria de equipos curatoriales</p>
+          <p>El proyecto 48 SNA gestionó la etapa de concepción teórica, concertación presupuestal y selección del comité curatorial para la futura edición del Salón Nacional de Artistas. Durante esta fase prospectiva, se realizaron mesas de diálogo con el sector artístico, encuentros de evaluación de salones anteriores y el diseño metodológico de la gran convocatoria pública de investigación curatorial. Esta estructuración anticipada permitió proyectar los alianzas institucionales necesarias con administraciones locales, museos, galerías comunitarias y centros culturales del territorio nacional. El proyecto coordinó los estudios de factibilidad técnica y los programas mediáticos que garantizarán una amplia cobertura, accesibilidad universal y un alto nivel de debate estético e histórico.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de las Culturas, las Artes y los Saberes</a></p>
+        `
+      },
+      "19 SRA": {
+        fullText: `
+          <p>Diagnósticos territoriales y concertación de agendas curatoriales regionales</p>
+          <p>El 19 SRA comprendió las labores preparatorias para la edición número 19 de los Salones Regionales. La iniciativa se enfocó en entablar comunicación directa con los consejos departamentales de arte, las comunidades étnicas y las colectividades independientes para construir las bases de las becas de curaduría que regirán en las seis regiones del país. El proyecto promovió espacios de discusión previa para identificar las problemáticas contemporáneas más apremiantes de cada región, asegurando que los términos de referencia respondan fielmente a las realidades locales. Con esto se garantizó una alta participación de artistas jóvenes y la activación de circuitos culturales por fuera de las capitales departamentales.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Artes Visuales MinCulturas</a></p>
+        `
+      },
+
+      // ==========================================
+      // LÍNEA: PROYECTOS ESPECIALES
+      // ==========================================
+      "MAMBO": {
+        fullText: `
+          <p>Alianza institucional, conservación patrimonial y exposiciones de alto impacto</p>
+          <p>Este proyecto especial articuló la cooperación técnica y financiera entre las entidades públicas y el Museo de Arte Moderno de Bogotá (MAMBO). La alianza estuvo orientada a fortalecer la restauración de obras de la colección permanente, financiar programas de mediación educativa para colegios públicos y apoyar la producción de exposiciones retrospectivas de grandes maestros nacionales e internacionales. El trabajo conjunto potenció las capacidades del museo para operar como un centro dinámico de pensamiento visual en el corazón de la capital. La iniciativa financió el acceso gratuito en jornadas especiales para poblaciones vulnerables, desarrolló talleres infantiles de creatividad y aseguró estándares internacionales en la conservación preventiva del acervo artístico que custodia la institución.</p>
+          <p><a href="https://www.mambogota.com" target="_blank" rel="noopener noreferrer">Museo de Arte Moderno de Bogotá (MAMBO)</a><br><a href="https://www.museoscolombianos.gov.co" target="_blank" rel="noopener noreferrer">Museo Nacional de Colombia</a></p>
+        `
+      },
+      "MCR": {
+        fullText: `
+          <p>Arte urbano, muralismo comunitario y resignificación del espacio público</p>
+          <p>MCR representó un proyecto especial dedicado a la investigación, salvaguarda y fomento de las expresiones artísticas urbanas, el graffiti y el muralismo de gran formato en entornos periféricos. La iniciativa reconoció la calle como un territorio crítico de creación pedagógica y política donde se disputan narrativas de identidad, memoria y memoria popular. El proyecto cofinanció intervenciones pictóricas comunitarias, promovió corredores turísticos de arte urbano gestionados por los mismos jóvenes de los barrios y produjo contenidos impresos e interactivos de sistematización de las obras. Asimismo, MCR coordinó conversatorios sobre seguridad ciudadana, derecho a la ciudad y uso responsable del espacio público en concertación con las autoridades locales.</p>
+          <p><a href="https://www.idartes.gov.co" target="_blank" rel="noopener noreferrer">Instituto Distrital de las Artes (IDARTES)</a><br><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de las Culturas - Arte en Espacio Público</a></p>
+        `
+      },
+      "Voces y saberes": {
+        fullText: `
+          <p>Tradición oral, transferencia de metodologías y memoria de colaboradores</p>
+          <p>Voces y saberes se consolidó como una estrategia orientada a la preservación del conocimiento acumulado, las metodologías vivas y la memoria oral de los colaboradores, gestores y sabedores de larga trayectoria en la entidad. Mediante entrevistas a profundidad, registros audiovisuales en formato documental y la elaboración de cartillas metodológicas, el proyecto evitó la pérdida de saberes cuando los equipos humanos se renuevan. El material producido alimentó el archivo histórico institucional y es utilizado en los procesos de inducción y capacitación del personal emergente. Adicionalmente, se produjeron podcast comunitarios de libre difusión donde se narran los aciertos, dificultades y transformaciones de la gestión cultural pública durante las últimas décadas en Colombia.</p>
+          <p><a href="https://www.archivogeneral.gov.co" target="_blank" rel="noopener noreferrer">Archivo General de la Nación</a><br><a href="https://www.banrepcultural.org" target="_blank" rel="noopener noreferrer">Biblioteca Virtual Banco de la República</a></p>
+        `
+      },
+
+      // ==========================================
+      // LÍNEA: ADMINISTRATIVO
+      // ==========================================
+      "Convenio Ateneo 1684 ❘ 2025": {
+        fullText: `
+          <p>Ejecución presupuestal, seguimiento técnico y liquidación de aportes 2025</p>
+          <p>El convenio Ateneo 1684 vigencia 2025 constituyó el marco de cooperación técnica e interinstitucional para el cofinanciamiento de actividades de formación y presentación artística comunitaria. El proyecto administró el cumplimiento estricto de los desembolsos, la supervisión de los informes financieros y el control de metas cualitativas acordadas con las entidades ejecutoras. El equipo administrativo aseguró la legalidad del gasto público, realizó visitas periódicas de supervisión técnica sobre el terreno y gestionó las pólizas y actos administrativos requeridos para el cierre presupuestal ordenado. La correcta ejecución de este convenio garantizó la continuidad del apoyo público a salas teatrales y centros comunitarios aliados.</p>
+          <p><a href="https://www.colombiacompra.gov.co" target="_blank" rel="noopener noreferrer">SECOP II - Colombia Compra Eficiente</a><br><a href="https://www.contraloria.gov.co" target="_blank" rel="noopener noreferrer">Contraloría General de la República</a></p>
+        `
+      },
+      "Convenio Arteria 1478 ❘ 2025": {
+        fullText: `
+          <p>Difusión periodística de artes visuales, periodismo cultural e impactos 2025</p>
+          <p>Este convenio administró la alianza para la edición, impresión y distribución digital de contenidos especializados sobre el ecosistema de las artes visuales producidos durante la vigencia 2025. El proyecto buscó apoyar el periodismo cultural crítico e independiente como vehículo clave para la formación de públicos y la visibilización de las convocatorias estatales. El plan administrativo supervisó los indicadores de tiraje, métricas de lectura en plataformas digitales, entregas físicas en bibliotecas y el cumplimiento del cronograma editorial acordado. Asimismo, garantizó la inclusión de crónicas y entrevistas a artistas provenientes de municipios lejanos a la capital.</p>
+          <p><a href="https://periodicoarteria.com" target="_blank" rel="noopener noreferrer">Periódico Arteria</a><br><a href="https://www.colombiacompra.gov.co" target="_blank" rel="noopener noreferrer">Portal SECOP II</a></p>
+        `
+      },
+      "Convenio Arteria 0965 ❘ 2026": {
+        fullText: `
+          <p>Planeación estratégica, pauta institucional y circulación de contenidos 2026</p>
+          <p>Proyecto administrativo orientado a la planeación, reserva presupuestal y ejecución del convenio con el Periódico Arteria para el ciclo 2026. La iniciativa contempla la divulgación de las convocatorias del Programa Nacional de Estímulos, los Salones Regionales de Artistas y las agendas culturales de las salas concertadas durante dicho periodo. El proyecto coordina los comités técnicos bilaterales para definir el enfoque temático de los suplementos especiales, velando por la adecuada aplicación de las normas de contratación pública y asegurando la transparencia en el uso de los fondos asignados a la divulgación cultural.</p>
+          <p><a href="https://periodicoarteria.com" target="_blank" rel="noopener noreferrer">Periódico Arteria</a><br><a href="https://www.colombiacompra.gov.co" target="_blank" rel="noopener noreferrer">SECOP II</a></p>
+        `
+      },
+      "Convenio ❘ 2027": {
+        fullText: `
+          <p>Proyección financiera, formulación de términos y vigencias futuras</p>
+          <p>Este proyecto estratégico englobó las acciones administrativas para el diseño presupuestal y la estructuración de términos de referencia de las alianzas contractuales proyectadas para el año 2027. La iniciativa permitió anticipar los requerimientos de cofinanciación con la cooperación internacional y entidades privadas. Mediante el análisis de capacidad jurídica, financiera y técnica de los posibles cooperantes, el equipo garantizó que las metas del plan quinquenal se ejecuten sin interrupciones burocráticas entre vigencias fiscales, promoviendo la sostenibilidad institucional de largo alcance.</p>
+          <p><a href="https://www.minhacienda.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de Hacienda y Crédito Público</a><br><a href="https://www.dnp.gov.co" target="_blank" rel="noopener noreferrer">Departamento Nacional de Planeación</a></p>
+        `
+      },
+      "Indicadores": {
+        fullText: `
+          <p>Medición cuantitativa, tableros de control (Dashboard) y cumplimiento de metas</p>
+          <p>El proyecto Indicadores consolidó el sistema integral de medición y evaluación del desempeño administrativo del área. Se encargó de la recolección periódica de métricas de avance de proyectos, eficiencia presupuestal, atención al ciudadano e impacto social de la inversión en artes. A través de tableros de control en tiempo real (Business Intelligence), la iniciativa entregó información oportuna a la dirección estratégica para corregir desviaciones en la ejecución de metas. Produjo informes oficiales para la Contraloría, el Departamento Nacional de Planeación y las rendiciones públicas de cuentas.</p>
+          <p><a href="https://www.sinergia.dnp.gov.co" target="_blank" rel="noopener noreferrer">Sistema SINERGIA - DNP</a><br><a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener noreferrer">MIPG - Función Pública</a></p>
+        `
+      },
+      "Gestion documental": {
+        fullText: `
+          <p>Organización de expedientes, transferencia documental y cero papel</p>
+          <p>Gestión Documental aseguró la organización estandarizada, custodia y digitalización de todo el flujo documental producido por los proyectos del área. El proyecto implementó las Tablas de Retención Documental (TRD) aprobadas y fomentó la política institucional de 'Cero Papel'. El equipo realizó capacitaciones al personal administrativo para el correcto foliado, indexación digital y conservación física de contratos, convenios y actas. Esto facilitó las auditorías públicas, garantizó la transparencia institucional y preservó el patrimonio documental de la entidad.</p>
+          <p><a href="https://www.archivogeneral.gov.co" target="_blank" rel="noopener noreferrer">Archivo General de la Nación</a><br><a href="https://www.mintic.gov.co" target="_blank" rel="noopener noreferrer">Ministerio TIC - Estrategia Gobierno Digital</a></p>
+        `
+      },
+      "Comunicaciones": {
+        fullText: `
+          <p>Relaciones con medios, identidad visual y posicionamiento público</p>
+          <p>El proyecto Comunicaciones planificó y ejecutó la estrategia informativa de la entidad, velando por la divulgación accesible de programas, convocatorias y eventos ante la opinión pública. Manejó los canales digitales institucionales, boletines de prensa, boletines radiales y las respuestas a medios masivos. Garantizó la aplicación unificada de las guías de marca e identidad visual, apoyó la transmisión de eventos vía streaming y evaluó las métricas de alcance en redes sociales, fortaleciendo el vínculo directo entre el sector cultural y la ciudadanía.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Sala de Prensa MinCulturas</a><br><a href="https://www.rtvc.gov.co" target="_blank" rel="noopener noreferrer">RTVC Sistema de Medios Públicos</a></p>
+        `
+      },
+      "Calendario": {
+        fullText: `
+          <p>Sincronización de eventos, uso de salas e hitos del sector cultural</p>
+          <p>El proyecto Calendario centralizó la articulación del cronograma operativo de todas las áreas y proyectos. Evitó la cruza de fechas en el uso de espacios públicos, coordinó las agendas de los líderes y planificó los hitos principales del año (apertura de convocatorias, inauguraciones de salones, asambleas de gobernanza). El equipo distribuyó mensualmente la agenda cultural institucional para uso de los funcionarios internos y la ciudadanía, optimizando la logística operacional de los viajes, montajes y transmisiones en directo.</p>
+          <p><a href="https://www.mincultura.gov.co" target="_blank" rel="noopener noreferrer">Agenda Cultural de Colombia</a></p>
+        `
+      },
+      "Comisiones": {
+        fullText: `
+          <p>Trámite de legalización, agendas territoriales y desplazamiento de funcionarios</p>
+          <p>Comisiones gestionó los trámites administrativos, expedición de tiquetes aéreos, asignación de viáticos y giros de legalización de transporte para los funcionarios y contratistas que se desplazaron a comisiones técnicas en los departamentos. Supervisó que cada comisión cumpliera con un plan de trabajo justificado y presentara los informes de seguimiento territorial dentro de los plazos normativos, manteniendo el control presupuestal estricto del rubro de movilidad institucional.</p>
+          <p><a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener noreferrer">Función Pública - Normativa de Viáticos</a><br><a href="https://www.minhacienda.gov.co" target="_blank" rel="noopener noreferrer">Ministerio de Hacienda</a></p>
+        `
+      },
+      "AZ PQRS": {
+        fullText: `
+          <p>Transparencia, derecho de petición y tiempos de respuesta ciudadana</p>
+          <p>AZ PQRS administró el canal oficial de atención a la ciudadanía para el trámite de peticiones, quejas, reclamos, sugerencias y denuncias sobre las acciones de la entidad. Supervisó el cumplimiento riguroso de los tiempos legales de respuesta estipulados por la ley de transparencia. El proyecto analizó cuantitativa y cualitativamente los motivos más frecuentes de consulta de los usuarios, generando alertas tempranas para que las áreas operativas mejoren sus procesos, convocatorias e instructivos de atención al público.</p>
+          <p><a href="https://www.secretariasenado.gov.co" target="_blank" rel="noopener noreferrer">Ley 1712 de Transparencia y del Derecho de Acceso a la Información</a><br><a href="https://www.procuraduria.gov.co" target="_blank" rel="noopener noreferrer">Procuraduría General de la Nación</a></p>
         `
       }
     };
 
-    const personColors = {
-      "Todo el equipo": "#111111",
-      "Carlos": "#0284c7",
-      "Jair": "#2563eb",
-      "Jheovany": "#059669",
-      "Luisa": "#d97706",
-      "Maria Paula": "#7c3aed",
-      "Mariana": "#db2777",
-      "Mariela": "#0891b2",
-      "Sebastian": "#ea580c"
-    };
-
     let tasks = loadData();
-    let activeFilterType = 'status';
-    let activeFilterValue = 'all';
+    let activeStatusFilter = 'all';
+    let activePersonFilter = 'all';
+    let activeCategoryFilter = 'all';
 
     function loadData() {
       try {
@@ -447,48 +820,66 @@
       render();
     }
 
-    function switchMainView(view) {
-      const tasksView = document.getElementById('tasks-view');
-      const cardsView = document.getElementById('cards-view');
-      const btnTasks = document.getElementById('view-tasks-btn');
-      const btnCards = document.getElementById('view-cards-btn');
-      const sidebarFilters = document.getElementById('sidebar-filters-section');
+    function initFilters() {
+      // Filtros de categorías (Líneas)
+      const categoryFiltersDiv = document.getElementById('category-filters');
+      categoryFiltersDiv.innerHTML = '';
 
-      if (view === 'tasks') {
-        tasksView.style.display = 'block';
-        cardsView.style.display = 'none';
-        btnTasks.classList.add('active');
-        btnCards.classList.remove('active');
-        sidebarFilters.style.display = 'block';
-      } else {
-        tasksView.style.display = 'none';
-        cardsView.style.display = 'block';
-        btnCards.classList.add('active');
-        btnTasks.classList.remove('active');
-        sidebarFilters.style.display = 'none';
-        renderCardsView();
+      const allCatLink = document.createElement('div');
+      allCatLink.className = 'nav-link active';
+      allCatLink.textContent = 'Todas';
+      allCatLink.onclick = () => setCategoryFilter('all', allCatLink);
+      categoryFiltersDiv.appendChild(allCatLink);
+
+      for (const line of Object.keys(projectStructure)) {
+        const navLink = document.createElement('div');
+        navLink.className = 'nav-link';
+        navLink.textContent = line;
+        navLink.onclick = () => setCategoryFilter(line, navLink);
+        categoryFiltersDiv.appendChild(navLink);
       }
+
+      // Filtros de Responsables
+      const personFiltersDiv = document.getElementById('person-filters');
+      personFiltersDiv.innerHTML = '';
+
+      const allPersonLink = document.createElement('div');
+      allPersonLink.className = 'nav-link active';
+      allPersonLink.textContent = 'Todos';
+      allPersonLink.onclick = () => setPersonFilter('all', allPersonLink);
+      personFiltersDiv.appendChild(allPersonLink);
+
+      teamMembers.forEach(person => {
+        const navLink = document.createElement('div');
+        navLink.className = 'nav-link';
+        navLink.textContent = person;
+        navLink.onclick = () => setPersonFilter(person, navLink);
+        personFiltersDiv.appendChild(navLink);
+      });
     }
 
-    function renderCardsView() {
-      const container = document.getElementById('cards-container');
-      container.innerHTML = '';
+    function setStatusFilter(value, element) {
+      activeStatusFilter = value;
+      const group = element.parentElement;
+      Array.from(group.children).forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      render();
+    }
 
-      for (const [line, projects] of Object.entries(projectStructure)) {
-        const bgColor = lineColors[line] || "#ffffff";
+    function setPersonFilter(person, element) {
+      activePersonFilter = person;
+      const group = element.parentElement;
+      Array.from(group.children).forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      render();
+    }
 
-        projects.forEach(proj => {
-          const card = document.createElement('div');
-          card.className = 'project-card-square';
-          card.style.backgroundColor = bgColor;
-          card.onclick = () => openModal(line, proj);
-          card.innerHTML = `
-            <div class="card-line">${line}</div>
-            <div class="card-title">${proj}</div>
-          `;
-          container.appendChild(card);
-        });
-      }
+    function setCategoryFilter(category, element) {
+      activeCategoryFilter = category;
+      const group = element.parentElement;
+      Array.from(group.children).forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      render();
     }
 
     function openModal(line, project) {
@@ -508,191 +899,131 @@
       document.getElementById('project-modal').style.display = 'none';
     }
 
-    function initSelectsAndFilters() {
-      const lineSelect = document.getElementById('line-select');
-      const categoryFiltersDiv = document.getElementById('category-filters');
-
-      lineSelect.innerHTML = '<option value="" disabled selected>Línea / Área...</option>';
-      categoryFiltersDiv.innerHTML = '';
-
-      for (const line of Object.keys(projectStructure)) {
-        const option = document.createElement('option');
-        option.value = line;
-        option.textContent = line;
-        lineSelect.appendChild(option);
-
-        const navLink = document.createElement('div');
-        navLink.className = 'nav-link';
-        navLink.textContent = line;
-        navLink.onclick = () => setFilter('category', line);
-        categoryFiltersDiv.appendChild(navLink);
-      }
-    }
-
-    document.getElementById('line-select').addEventListener('change', (e) => {
-      const line = e.target.value;
-      const projectSelect = document.getElementById('project-select');
-      const customProjectInput = document.getElementById('custom-project');
-
-      projectSelect.innerHTML = '<option value="" disabled selected>Proyecto...</option>';
-      customProjectInput.style.display = 'none';
-      customProjectInput.required = false;
-
-      if (projectStructure[line]) {
-        projectStructure[line].forEach(proj => {
-          const opt = document.createElement('option');
-          opt.value = proj;
-          opt.textContent = proj;
-          projectSelect.appendChild(opt);
-        });
-
-        const otherOpt = document.createElement('option');
-        otherOpt.value = 'OTHER_PROJECT';
-        otherOpt.textContent = 'Otro...';
-        projectSelect.appendChild(otherOpt);
-
-        projectSelect.disabled = false;
-      }
-    });
-
-    document.getElementById('project-select').addEventListener('change', (e) => {
-      const customProjectInput = document.getElementById('custom-project');
-      if (e.target.value === 'OTHER_PROJECT') {
-        customProjectInput.style.display = 'block';
-        customProjectInput.required = true;
-      } else {
-        customProjectInput.style.display = 'none';
-        customProjectInput.required = false;
-      }
-    });
-
-    document.getElementById('person-select').addEventListener('change', (e) => {
-      const customPersonInput = document.getElementById('custom-person');
-      if (e.target.value === 'OTHER_PERSON') {
-        customPersonInput.style.display = 'block';
-        customPersonInput.required = true;
-      } else {
-        customPersonInput.style.display = 'none';
-        customPersonInput.required = false;
-      }
-    });
-
-    document.getElementById('task-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      try {
-        const lineVal = document.getElementById('line-select').value;
-        const projectVal = document.getElementById('project-select').value;
-        const personVal = document.getElementById('person-select').value;
-
-        let category = lineVal;
-        let project = projectVal;
-        let person = personVal;
-
-        if (projectVal === 'OTHER_PROJECT') {
-          project = document.getElementById('custom-project').value.trim();
-        }
-
-        if (personVal === 'OTHER_PERSON') {
-          person = document.getElementById('custom-person').value.trim();
-        }
-
-        tasks.push({
-          id: Date.now(),
-          title: document.getElementById('title').value.trim(),
-          category: category,
-          project: project,
-          person: person,
-          done: false,
-          createdAt: new Date().toLocaleDateString('es-ES')
-        });
-
-        document.getElementById('task-form').reset();
-        document.getElementById('project-select').disabled = true;
-        document.getElementById('project-select').innerHTML = '<option value="" disabled selected>Proyecto...</option>';
-        document.getElementById('custom-project').style.display = 'none';
-        document.getElementById('custom-person').style.display = 'none';
-        saveData();
-      } catch (err) {
-        console.error("Form error:", err);
-      }
-    });
-
-    function getPersonColor(personName) {
-      if (personColors[personName]) return personColors[personName];
-      let hash = 0;
-      for (let i = 0; i < personName.length; i++) {
-        hash = personName.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      return `hsl(${Math.abs(hash) % 360}, 60%, 45%)`;
-    }
-
-    function setFilter(type, value) {
-      activeFilterType = type;
-      activeFilterValue = value;
-      render();
-    }
-
     function render() {
       updateStats();
-      const tbody = document.getElementById('tasks-table-body');
-      tbody.innerHTML = '';
+      const container = document.getElementById('projects-container');
+      container.innerHTML = '';
 
-      const filteredTasks = tasks.filter(t => {
-        if (activeFilterType === 'status') {
-          if (activeFilterValue === 'pending') return !t.done;
-          if (activeFilterValue === 'completed') return t.done;
-          return true;
-        }
-        if (activeFilterType === 'category') return t.category === activeFilterValue;
-        return true;
-      });
+      for (const [line, projects] of Object.entries(projectStructure)) {
+        if (activeCategoryFilter !== 'all' && activeCategoryFilter !== line) continue;
 
-      filteredTasks.forEach(task => {
-        const color = getPersonColor(task.person);
-        const tr = document.createElement('tr');
+        let visibleCardsInLine = 0;
 
-        tr.innerHTML = `
-          <td><span class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</span></td>
-          <td>
-            <div class="proj-name">${escapeHtml(task.project)}</div>
-            <div class="cat-tag">${escapeHtml(task.category)}</div>
-          </td>
-          <td>
-            <div class="person-dot-wrapper">
-              <span class="dot" style="background-color: ${color}"></span>
-              ${escapeHtml(task.person)}
+        const categorySection = document.createElement('div');
+        categorySection.className = 'category-section';
+
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.textContent = line;
+
+        const grid = document.createElement('div');
+        grid.className = 'projects-grid';
+
+        projects.forEach(proj => {
+          const projectTasks = tasks.filter(t => {
+            const matchesProject = t.project === proj;
+            const matchesStatus = activeStatusFilter === 'all' || 
+              (activeStatusFilter === 'pending' && !t.done) || 
+              (activeStatusFilter === 'completed' && t.done);
+            const matchesPerson = activePersonFilter === 'all' || t.person === activePersonFilter;
+
+            return matchesProject && matchesStatus && matchesPerson;
+          });
+
+          // Si hay filtro de responsable activo y no tiene tareas en este proyecto, se omite el renderizado de esta tarjeta
+          if (activePersonFilter !== 'all' && projectTasks.length === 0) {
+            return;
+          }
+
+          visibleCardsInLine++;
+
+          const card = document.createElement('div');
+          card.className = 'project-card';
+
+          let tasksHtml = '';
+          if (projectTasks.length === 0) {
+            tasksHtml = `<div class="no-tasks-msg">No hay tareas con este filtro.</div>`;
+          } else {
+            projectTasks.forEach(task => {
+              tasksHtml += `
+                <div class="task-item-row">
+                  <div class="task-left">
+                    <input type="checkbox" class="task-checkbox" ${task.done ? 'checked' : ''} onclick="toggleTask(${task.id})">
+                    <span class="task-text ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</span>
+                  </div>
+                  <div class="task-meta-info">
+                    <span class="person-name-tag">${escapeHtml(task.person.split(' ')[0])}</span>
+                    <button class="btn-icon" onclick="deleteTask(${task.id})" title="Eliminar">✕</button>
+                  </div>
+                </div>
+              `;
+            });
+          }
+
+          let personOptionsHtml = '<option value="" disabled selected>Responsable...</option>';
+          teamMembers.forEach(person => {
+            personOptionsHtml += `<option value="${person}">${person}</option>`;
+          });
+
+          card.innerHTML = `
+            <div class="project-card-header">
+              <span class="project-title" onclick="openModal('${line}', '${proj}')">${proj}</span>
+              <button class="project-info-btn" onclick="openModal('${line}', '${proj}')">Info</button>
             </div>
-          </td>
-          <td><span class="date-cell">${task.createdAt || 'N/A'}</span></td>
-          <td>
-            <span class="status-pill ${task.done ? 'completed' : ''}">
-              ${task.done ? 'Completada' : 'Pendiente'}
-            </span>
-          </td>
-          <td style="text-align: right;">
-            <button class="btn-icon" data-action="toggle" data-id="${task.id}">${task.done ? '↩' : '✓'}</button>
-            <button class="btn-icon" data-action="delete" data-id="${task.id}">✕</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
+            <div class="project-tasks-list">
+              ${tasksHtml}
+            </div>
+            <form class="inline-task-form" onsubmit="handleInlineTaskSubmit(event, '${line}', '${proj}')">
+              <input type="text" placeholder="Nueva tarea..." required autocomplete="off">
+              <select required>
+                ${personOptionsHtml}
+              </select>
+              <button type="submit" class="btn-inline-add">+</button>
+            </form>
+          `;
+
+          grid.appendChild(card);
+        });
+
+        // Si la línea tiene al menos una tarjeta visible para el filtro seleccionado, se agrega al contenedor principal
+        if (visibleCardsInLine > 0) {
+          categorySection.appendChild(header);
+          categorySection.appendChild(grid);
+          container.appendChild(categorySection);
+        }
+      }
     }
 
-    document.getElementById('tasks-table-body').addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-icon');
-      if (!btn) return;
-      
-      const action = btn.dataset.action;
-      const id = Number(btn.dataset.id);
+    function handleInlineTaskSubmit(event, line, project) {
+      event.preventDefault();
+      const form = event.target;
+      const titleInput = form.querySelector('input[type="text"]');
+      const personSelect = form.querySelector('select');
 
-      if (action === 'toggle') {
-        tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
-        saveData();
-      } else if (action === 'delete') {
-        tasks = tasks.filter(t => t.id !== id);
-        saveData();
-      }
-    });
+      if (!titleInput.value.trim() || !personSelect.value) return;
+
+      tasks.push({
+        id: Date.now() + Math.random(),
+        title: titleInput.value.trim(),
+        category: line,
+        project: project,
+        person: personSelect.value,
+        done: false,
+        createdAt: new Date().toLocaleDateString('es-ES')
+      });
+
+      saveData();
+    }
+
+    function toggleTask(id) {
+      tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+      saveData();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      saveData();
+    }
 
     function updateStats() {
       document.getElementById('stat-total').textContent = tasks.length;
@@ -779,8 +1110,68 @@
       reader.readAsText(file);
     }
 
-    initSelectsAndFilters();
+    initFilters();
     render();
+
+
+    // Abrir y cerrar modales
+    function abrirModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function cerrarAlDarClicAfuera(e, id) {
+      if (e.target.id === id) cerrarModal(id);
+    }
+
+    // Cargar todos los enlaces almacenados en projectDetails.
+    function abrirModalEnlaces() {
+      const contenedor = document.getElementById('tabla-enlaces-body');
+      if (!contenedor) return;
+
+      contenedor.innerHTML = '';
+
+      for (const [proyecto, datos] of Object.entries(projectDetails)) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = datos.fullText || '';
+
+        const enlaces = Array.from(tempDiv.querySelectorAll('a'));
+        if (enlaces.length === 0) continue;
+
+        const enlacesHtml = enlaces.map(a =>
+          `<a href="${a.getAttribute('href')}" target="_blank" rel="noopener noreferrer">${a.textContent}</a>`
+        ).join('<br>');
+
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td><strong>${escapeHtml(proyecto)}</strong></td>
+          <td>${enlacesHtml}</td>
+        `;
+        contenedor.appendChild(fila);
+      }
+
+      abrirModal('modal-enlaces');
+    }
+
+    // Cerrar cualquier modal con la tecla Escape.
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+          modal.style.display = 'none';
+        });
+        document.body.style.overflow = '';
+      }
+    });
+
   </script>
 </body>
 </html>
